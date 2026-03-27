@@ -64,16 +64,24 @@ Then create an `AGENTS.md` file in that same results folder with this exact one-
 Open, read, and execute the instructions in `scomnom-anno-bot/AGENTS.md`.
 ```
 
-Then create a dataset-specific local override file in that same results folder:
+Then create a local override file in that same results folder:
 
 ```text
 project-local.md
 ```
 
-You can start from:
+For a new project, start by copying the simple default file:
+
+```bash
+cp scomnom-anno-bot/templates/report_templates/project-local.example.md project-local.md
+```
+
+That file is intentionally project-agnostic and acts as a sensible default baseline until you add project-specific notes.
+
+If you want an explained version that describes what each section is for, also see:
 
 ```text
-scomnom-anno-bot/templates/report_templates/project-local.example.md
+scomnom-anno-bot/templates/report_templates/project-local.annotated-example.md
 ```
 
 The resulting results-folder layout will typically look like:
@@ -242,6 +250,7 @@ Portable templates are included in:
 - `templates/report_templates/phase1_overview_template.html`
 - `templates/report_templates/phase1_overview_template.txt`
 - `templates/report_templates/project-local.example.md`
+- `templates/report_templates/project-local.annotated-example.md`
 
 These provide a stable baseline for report structure and local project configuration.
 

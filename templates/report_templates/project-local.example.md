@@ -1,67 +1,33 @@
 # Dataset
 
-Briefly describe the dataset, tissue, species, and modality here.
-
-Example:
-
-- Human adipose snRNA-seq
-- Mouse liver scRNA-seq
-- Human PBMC scRNA-seq
+Update this line with a short dataset description.
 
 # Directory guidance
 
-List any project-specific directory rules here.
-
-Examples:
-
 - Prefer `figures/figures/png/` over `figures/figures/pdf/`.
-- Do not use `figures/figures/pdf/`.
-- Do not use superseded result folders such as `cluster_and_annotate_round1/` if a newer round exists.
-- Ignore `tables/DE_tables_round1/` if the current task is marker-stage annotation rather than differential expression.
+- Do not use `figures/figures/pdf/` unless the user explicitly asks for a PDF-only asset.
+- If multiple result trees exist for the same stage, prefer the newest valid one.
+- If there are obvious duplicated, nested, outdated, or superseded result folders, prefer the newest or explicitly active one.
+- For annotation-stage work, prioritize marker-stage outputs unless the user explicitly asks for differential expression or another stage.
 
 # Annotation backbone
 
-State which clustering round and embedding should be used for annotation in this project.
-
-Examples:
-
-- Use the compacted clustering round as the annotation backbone.
-- Use the post-annotation UMAP only as a display embedding.
-- Use Harmony clustering for identity decisions and scANVI only for figure layout.
+- If multiple clustering rounds exist, prefer the latest compacted or finalized annotation round that looks current and is not marked as superseded.
+- Use the chosen clustering round as the annotation backbone.
+- If multiple embeddings exist, treat the cleaner annotated or presentation UMAP as a display layer only, unless the user explicitly says it should define identity.
 
 # Current annotation workflow caveats
 
-Record any project-specific caveats that affect interpretation.
-
-Examples:
-
-- CellTypist labels were generated with an immune-only model, so non-immune labels are not reliable.
-- One subset contains expected stromal contamination.
-- Marker discovery has only been run for subset results, not for the project root.
+- Add project-specific caveats here if needed.
 
 # Plotting workflow
 
-If the project has a preferred plotting notebook or script, record it here.
-
-Examples:
-
-- Preferred plotting notebook: `03_load_and_plot_all_de_functions.ipynb`
-- Preferred plotting script: `scripts/plot_gene_panels.py`
-
-If the local environment setup has important non-portable details, record them here.
-
-Examples:
-
 - Conda environment name: `scOmnom_env`
-- Conda activation helper path on this machine
-- Any known import or cache quirks
+- Use `templates/report_templates/panel_plot_template.py` as the default panel-generation path.
+- If the project has a preferred local plotting script, add it here.
 
 # Active context notes
 
-Record any current-project rules that help select the correct result tree.
-
-Examples:
-
-- Root-level work should use `results_round2/`.
-- Lymphoid work should use `results_subset_lymphoid/`.
-- If duplicate result trees exist, prefer the newest timestamped version.
+- Root-level work should use the main result tree.
+- Subset work should use the matching subset result tree.
+- Once a subset is made active, continue using that subset context until the user switches again.

@@ -12,13 +12,17 @@ When creating a new project-local override file, use this starter template if av
 
 - `templates/report_templates/project-local.example.md`
 
+If the user wants more explanation of the intended contents, also consult:
+
+- `templates/report_templates/project-local.annotated-example.md`
+
 Use `project-local.md` for items such as:
 
 - dataset description
 - excluded or superseded directories
 - preferred clustering round or embedding for annotation
 - known CellTypist caveats for the current dataset
-- project-specific plotting notebook names
+- project-specific plotting entrypoint details when they differ from the default reusable plotting script
 - environment or path details that are not portable across machines or projects
 
 Keep the shared workflow logic in `AGENTS.md` and move project-specific biology or layout assumptions into `project-local.md`.
@@ -50,7 +54,10 @@ Run through the following in order:
 Environment check:
 
 - Check whether `scOmnom_env` can be activated.
-- Check whether `scomnom` can be imported inside that environment.
+- Before importing `scomnom` or other plotting-related libraries, set writable cache directories:
+  - `NUMBA_CACHE_DIR=/tmp/numba_cache`
+  - `MPLCONFIGDIR=/tmp/matplotlib_cache`
+- Check whether `scomnom` can be imported inside that environment after setting those cache variables.
 - If both succeed, panel plotting and other `scomnom`-dependent steps can be used normally.
 - If either check fails, do not hard-fail later. Instead, continue with the annotation steps that can still be done from existing figures, tables, and reports, and explicitly note that custom panel plotting or other `scomnom`-dependent steps are currently unavailable.
 - When `scOmnom_env` or `scomnom` is unavailable, gracefully opt out of panel generation until the environment issue is resolved.
@@ -373,7 +380,7 @@ Rules for the asset bundle:
 
 # Custom gene panel plotting workflow
 
-Custom validation gene panels can be generated either from a project plotting notebook or from a reusable plotting script skeleton.
+Custom validation gene panels should default to the reusable plotting script skeleton unless the local project override specifies a different plotting entrypoint.
 
 If `project-local.md` names a preferred notebook or plotting entrypoint, use that as the project-specific starting point.
 
@@ -401,13 +408,13 @@ Persistent session setup should follow this pattern:
 
 - Shell: source Conda with the appropriate local Conda setup if needed.
 - Activate environment: `conda activate scOmnom_env`
-- Set writable cache directories before importing plotting libraries:
+- Always set writable cache directories before importing `scanpy`, `scomnom`, or related plotting libraries:
   - `NUMBA_CACHE_DIR=/tmp/numba_cache`
-  - Prefer also setting `MPLCONFIGDIR` to a writable temp directory if needed
+  - `MPLCONFIGDIR=/tmp/matplotlib_cache`
 
 In the persistent Python session:
 
-- Import `scanpy` and `scomnom`
+- Import `scanpy` and `scomnom` only after the cache variables above are set
 - Load the active context marker-stage `adata` once with `om.load_dataset(...)`
 - Reuse helper functions equivalent to:
   - grouping-key inference
