@@ -1,0 +1,21 @@
+Deep-Dive Checklist
+
+- Confirm active context and output tree
+- Read local `project-local.md` if present
+- Review cell-level marker table
+- Review pseudobulk marker table
+- Inspect cluster-specific dotplot
+- Inspect cluster-specific violin plot
+- Inspect pathway and activity outputs:
+  - MSigDB
+  - DoRothEA
+  - PROGENy
+- Inspect clustering or QC evidence if relevant
+- Form initial label hypothesis
+- Find 2 to 3 literature references with DOI
+- Design 9-gene validation panel
+- Plot panel if `scomnom` plotting is available
+- Replace missing genes and replot if needed
+- Reassess label after panel review
+- Write `.md`, `.html`, `.txt`, and asset bundle
+- Confirm report section order is correct

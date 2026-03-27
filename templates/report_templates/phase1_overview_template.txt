@@ -1,0 +1,28 @@
+Phase 1 Overview
+
+Scope
+
+Summarize what object or subset is being reviewed, what clustering round is the backbone, and what the purpose of the first pass is.
+
+Global Evidence
+
+Give a high-level summary of the final UMAP and the all-cluster heatmaps. Explain what major compartments or lineages are visible.
+
+Global QC Context
+
+Summarize the overall QC state of the dataset or subset. Mention load-and-filter QC if relevant for phase 1, and clustering QC where it materially affects interpretation.
+
+Cluster Overview
+
+C00
+- Current interpretation: example rough identity
+- Status: deep-dive next or final-ready
+- Reasoning: one to three sentences summarizing the most important reasoning for the current phase-1 call
+
+Phase 1 Decision Summary
+
+- List clusters that are already final-ready
+- List clusters that should be subsetted or deep-dived next
+- List clusters that should be treated cautiously because of QC or contamination concerns
+
+End with a short practical takeaway that says where the real remaining work is.

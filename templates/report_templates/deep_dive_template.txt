@@ -1,0 +1,50 @@
+CXX
+
+Preferred Label
+MARKER1+ MARKER2+ Short descriptive label
+
+Clustering And QC Evidence
+
+Optional section. Use only when clustering QC materially affects the interpretation, such as for high-mito clusters, tiny clusters, poor silhouette support, single-sample clusters, likely contaminants, or possible doublets.
+
+Verdict
+
+One concise but substantive paragraph that states the favored identity, notes the main alternative interpretations when relevant, and explains why the current conclusion fits best across all evidence lines together.
+
+Marker Evidence
+
+First paragraph:
+Summarize the cell-level ranked markers and what lineage or state they imply.
+
+Second paragraph:
+Summarize the pseudobulk ranked markers and explain whether they reinforce or complicate the cell-level readout.
+
+Specificity Evidence
+
+Explain whether the proposed markers are concentrated in the target cluster or shared with neighboring states. Refer explicitly to dotplots, violins, UMAPs, and any relevant custom panels.
+
+Pathway And Activity Evidence
+
+Explain how MSigDB, DoRothEA, and PROGENy support, refine, or fail to support the marker-based interpretation. Do not just list terms; explain what they add biologically.
+
+Validation Panel
+
+["GENE1", "GENE2", "GENE3", "GENE4", "GENE5", "GENE6", "GENE7", "GENE8", "GENE9"]
+
+State whether all genes plotted successfully, whether any replacements were needed, and what the panel showed biologically.
+
+Naming Rationale
+
+MARKER1+ MARKER2+ Short descriptive label
+
+Explain why the exact two markers and descriptive phrase are the best final wording, and connect the final name back to the earlier evidence sections.
+
+Literature Support
+
+1. Author et al., Year. Short description of what this reference supports. DOI: 10.xxxx/placeholder1
+2. Author et al., Year. Short description of what this reference supports. DOI: 10.xxxx/placeholder2
+3. Author et al., Year. Short description of what this reference supports. DOI: 10.xxxx/placeholder3
+
+Uncertainty Or Next-Step Notes
+
+Optional section. Use only when the cluster remains ambiguous, when evidence conflicts, or when a follow-up panel would materially improve confidence.

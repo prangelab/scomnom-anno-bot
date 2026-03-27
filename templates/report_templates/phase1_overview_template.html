@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 1 Overview Template</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #fffdf8;
+      --text: #1f1f1f;
+      --muted: #5b5b5b;
+      --accent: #1e5a7a;
+      --border: #d9d3c7;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin: 0 0 20px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.15;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    p, li, td, th { font-size: 1rem; }
+    .muted { color: var(--muted); }
+    code { font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 0.95rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #f0ece2; font-family: Arial, Helvetica, sans-serif; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    figure {
+      margin: 0;
+      border: 1px solid var(--border);
+      background: #faf7f0;
+      padding: 10px;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    figcaption {
+      margin-top: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Phase 1 Overview</h1>
+      <p class="muted">Template for a first-pass overview report.</p>
+    </section>
+
+    <section>
+      <h2>Scope</h2>
+      <p>
+        Summarize what object or subset is being reviewed, what clustering round is the backbone, and what the purpose of the first pass is.
+      </p>
+    </section>
+
+    <section>
+      <h2>Global Evidence</h2>
+      <p>
+        Give a high-level summary of the final UMAP and the all-cluster heatmaps. Explain what major compartments or lineages are visible.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img src="TEMPLATE_assets/final_umap.png" alt="UMAP placeholder">
+          <figcaption>Final compacted UMAP placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img src="TEMPLATE_assets/cell_level_heatmap.png" alt="Cell-level heatmap placeholder">
+          <figcaption>Cell-level heatmap placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img src="TEMPLATE_assets/pseudobulk_heatmap.png" alt="Pseudobulk heatmap placeholder">
+          <figcaption>Pseudobulk heatmap placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Global QC Context</h2>
+      <p>
+        Summarize the overall QC state of the dataset or subset. Mention load-and-filter QC if relevant for phase 1, and clustering QC where it materially affects interpretation.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img src="TEMPLATE_assets/cluster_qc_summary.png" alt="Cluster QC placeholder">
+          <figcaption>Cluster QC summary placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img src="TEMPLATE_assets/cluster_sizes.png" alt="Cluster sizes placeholder">
+          <figcaption>Cluster sizes placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img src="TEMPLATE_assets/cluster_silhouette.png" alt="Silhouette placeholder">
+          <figcaption>Silhouette placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Cluster Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Cluster</th>
+            <th>Current Interpretation</th>
+            <th>Status</th>
+            <th>Reasoning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>C00</code></td>
+            <td>Example rough identity</td>
+            <td>Deep-dive next or final-ready</td>
+            <td>One to three sentences summarizing the most important reasoning for the current phase-1 call.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Phase 1 Decision Summary</h2>
+      <ul>
+        <li>List clusters that are already final-ready.</li>
+        <li>List clusters that should be subsetted or deep-dived next.</li>
+        <li>List clusters that should be treated cautiously because of QC or contamination concerns.</li>
+      </ul>
+      <p>
+        End with a short practical takeaway that says where the real remaining work is.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

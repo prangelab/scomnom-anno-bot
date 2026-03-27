@@ -1,0 +1,15 @@
+Phase 1 Overview Checklist
+
+- Confirm active context and output tree
+- Read local `project-local.md` if present
+- Inspect main or subset final UMAP
+- Inspect all-cluster heatmaps
+- Inspect cell-level marker tables
+- Inspect pseudobulk marker tables
+- Inspect relevant clustering QC
+- For root-level work, inspect relevant load-and-filter QC
+- Identify rough cluster identities
+- Identify likely final-ready clusters
+- Identify clusters or compartments to subset
+- Record short reasoning for each cluster or compartment
+- Write `.html` and `.txt` overview reports

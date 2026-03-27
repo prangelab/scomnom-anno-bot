@@ -1,0 +1,19 @@
+Cluster:
+
+Initial hypothesis:
+
+Proposed 9-gene panel:
+["GENE1", "GENE2", "GENE3", "GENE4", "GENE5", "GENE6", "GENE7", "GENE8", "GENE9"]
+
+Missing genes to replace:
+
+Replacement genes:
+
+Final accepted panel:
+["GENE1", "GENE2", "GENE3", "GENE4", "GENE5", "GENE6", "GENE7", "GENE8", "GENE9"]
+
+What the panel showed:
+
+Did the panel support the original hypothesis:
+
+Final label:

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Dive Template</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #fffdf8;
+      --text: #1f1f1f;
+      --muted: #5b5b5b;
+      --accent: #1e5a7a;
+      --border: #d9d3c7;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin: 0 0 20px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.15;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    p, li, td, th { font-size: 1rem; }
+    .label { font-size: 1.15rem; font-weight: 700; }
+    .muted { color: var(--muted); }
+    code, pre {
+      font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.95rem;
+    }
+    pre {
+      background: #f0ece2;
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      overflow-x: auto;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    figure {
+      margin: 0;
+      border: 1px solid var(--border);
+      background: #faf7f0;
+      padding: 10px;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    figcaption {
+      margin-top: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .thumb { cursor: zoom-in; }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20, 20, 20, 0.88);
+      padding: 28px;
+      z-index: 9999;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: min(94vw, 1500px);
+      max-height: 92vh;
+    }
+    .lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 92vh;
+      width: auto;
+      height: auto;
+      border: 2px solid #e8e1d4;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      background: white;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #d9d3c7;
+      border-radius: 999px;
+      background: #fffdf8;
+      color: #1f1f1f;
+      font: inherit;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>CXX</h1>
+      <p class="muted">Cluster annotation note template</p>
+    </section>
+
+    <section>
+      <h2>Preferred Label</h2>
+      <p class="label">MARKER1+ MARKER2+ Short descriptive label</p>
+    </section>
+
+    <section>
+      <h2>Clustering And QC Evidence</h2>
+      <p>
+        Optional section. Use this near the top only when clustering QC materially affects the interpretation, such as for high-mito clusters, tiny clusters, poor silhouette support, single-sample clusters, likely contaminants, or possible doublets.
+      </p>
+    </section>
+
+    <section>
+      <h2>Verdict</h2>
+      <p>
+        One concise but substantive paragraph that states the favored identity, notes the main alternative interpretations when relevant, and explains why the current conclusion fits best across all evidence lines together.
+      </p>
+    </section>
+
+    <section>
+      <h2>Marker Evidence</h2>
+      <p>
+        First paragraph: summarize the cell-level ranked markers and what lineage or state they imply.
+      </p>
+      <p>
+        Second paragraph: summarize the pseudobulk ranked markers and explain whether they reinforce or complicate the cell-level readout.
+      </p>
+    </section>
+
+    <section>
+      <h2>Specificity Evidence</h2>
+      <p>
+        Explain whether the proposed markers are concentrated in the target cluster or shared with neighboring states. Refer explicitly to dotplots, violins, UMAPs, and any relevant custom panels.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/cell_dotplot.png" alt="Cell-level dotplot placeholder">
+          <figcaption>Cell-level specificity plot placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/pseudobulk_dotplot.png" alt="Pseudobulk dotplot placeholder">
+          <figcaption>Pseudobulk specificity plot placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/cell_violin.png" alt="Cell-level violin placeholder">
+          <figcaption>Cell-level violin placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/pseudobulk_violin.png" alt="Pseudobulk violin placeholder">
+          <figcaption>Pseudobulk violin placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Pathway And Activity Evidence</h2>
+      <p>
+        One paragraph that explains how MSigDB, DoRothEA, and PROGENy support, refine, or fail to support the marker-based interpretation. Do not just list terms; explain what they add biologically.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/dorothea_top15_bar.png" alt="DoRothEA placeholder">
+          <figcaption>DoRothEA placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/progeny_top15_bar.png" alt="PROGENy placeholder">
+          <figcaption>PROGENy placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/hallmark_top15_bar.png" alt="Hallmark placeholder">
+          <figcaption>Hallmark placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/reactome_top15_bar.png" alt="Reactome placeholder">
+          <figcaption>Reactome placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Validation Panel</h2>
+      <pre>["GENE1", "GENE2", "GENE3", "GENE4", "GENE5", "GENE6", "GENE7", "GENE8", "GENE9"]</pre>
+      <p>
+        State whether all genes plotted successfully, whether any replacements were needed, and what the panel showed biologically.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/custom_dotplot.png" alt="Custom dotplot placeholder">
+          <figcaption>Custom validation dotplot placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/custom_violin.png" alt="Custom violin placeholder">
+          <figcaption>Custom validation violin placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/custom_umap.png" alt="Custom UMAP placeholder">
+          <figcaption>Custom validation UMAP placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Naming Rationale</h2>
+      <p class="label">MARKER1+ MARKER2+ Short descriptive label</p>
+      <p>
+        Explain why the exact two markers and descriptive phrase are the best final wording, and connect the final name back to the earlier evidence sections.
+      </p>
+    </section>
+
+    <section>
+      <h2>Literature Support</h2>
+      <ul>
+        <li>Author et al., Year. Short description of what this reference supports. DOI: <code>10.xxxx/placeholder1</code></li>
+        <li>Author et al., Year. Short description of what this reference supports. DOI: <code>10.xxxx/placeholder2</code></li>
+        <li>Author et al., Year. Short description of what this reference supports. DOI: <code>10.xxxx/placeholder3</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Uncertainty Or Next-Step Notes</h2>
+      <p>
+        Optional section. Use only when the cluster remains ambiguous, when evidence conflicts, or when a follow-up panel would materially improve confidence.
+      </p>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">x</button>
+      <img id="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const lightboxClose = document.getElementById("lightbox-close");
+    const thumbs = document.querySelectorAll(".thumb");
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImage.src = "";
+      lightboxImage.alt = "";
+    }
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener("click", () => {
+        lightboxImage.src = thumb.getAttribute("src");
+        lightboxImage.alt = thumb.getAttribute("alt") || "";
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
