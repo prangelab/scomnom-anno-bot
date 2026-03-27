@@ -55,7 +55,7 @@ If `scomnom` plotting is unavailable, `scomnom-anno-bot` should still be able to
 Clone `scomnom-anno-bot` into the results folder of your `scOmnom` project:
 
 ```bash
-git clone <YOUR-REPO-URL> scomnom-anno-bot
+git clone https://github.com/prangelab/scomnom-anno-bot.git scomnom-anno-bot
 ```
 
 Then create an `AGENTS.md` file in that same results folder with this exact one-line instruction:
