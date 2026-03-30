@@ -197,6 +197,195 @@ These phase 1 overview reports should summarize:
 
 These overview reports should capture the same kind of high-level decision sheet that may first appear in chat, but should be saved to disk as project records.
 
+Define this chat command for final integrated atlas reporting:
+
+- `perform phase 3 overview`
+- `generate phase 3 overview`
+- `phase 3 overview`
+
+Interpret this command as a post-merge final-atlas reporting workflow. This is not a fresh annotation pass and not a cluster deep dive. The purpose is to summarize the final integrated annotation state after subset-derived labels have been merged back into the main AnnData object and the final cluster names have already been applied.
+
+When running a phase 3 overview:
+
+- Use the merged main-object `adata` that contains the final merged annotation round, not the earlier pre-merge main-object file unless the user explicitly asks for that older state.
+- Prefer the latest merged annotation object that corresponds to the final integrated labels and clustering visuals.
+- Confirm which merged label key is active, for example a key such as `cluster_label__r4_subset_annotation`.
+- Use the final merged label names exactly as stored in the merged object or as displayed in the final merged UMAP figures.
+- Do not redo a full evidence-first annotation workflow unless the user explicitly asks for re-evaluation.
+- Treat this as a reporting and atlas-summary task, not as an adjudication task.
+
+Store phase 3 overview outputs in the active context `annotation/` folder.
+
+For phase 3 overviews, create:
+
+- one structured `.html` overview report
+- one matching plain-text `.txt` overview report
+- one sibling asset bundle such as `phase3_overview_assets/`
+
+Use filenames in this style:
+
+- `annotation/phase3_overview.html`
+- `annotation/phase3_overview.txt`
+- `annotation/phase3_overview_assets/`
+
+The phase 3 overview should have a similar level of detail to phase 1, but the content goal is different.
+
+Phase 3 overview reports should summarize:
+
+- the final merged atlas structure after subset annotations were merged back into the main object
+- the final population names exactly as they should be reported going forward
+- the high-level compartment organization of the atlas
+- the relative abundance of the final populations when available
+- global merged-atlas QC context that helps interpret the integrated result
+- concise per-population summaries written from the final names rather than from raw marker discovery
+- any broad interpretive caveats about mixed borders or continuous interfaces
+- a short final takeaway describing whether the merged atlas is stable and usable as the final annotation state
+
+Phase 3 overview reports should not focus on:
+
+- re-deriving cluster identities from raw markers
+- re-litigating fine annotation choices already decided in phase 2
+- building new validation panels by default
+- long marker-by-marker arguments
+- pseudobulk versus cell-level adjudication paragraphs for each cluster
+
+Instead, the phase 3 overview should read like a final integrated atlas memo:
+
+- concise
+- structured
+- population- and compartment-centered
+- grounded in the merged object and merged figures
+- explicit about the final names and atlas organization
+
+Recommended data inputs for phase 3:
+
+- the merged annotation `adata` object containing the final merged label key
+- final merged UMAP figures
+- merged cluster size plot
+- merged batch composition plot
+- merged silhouette plot
+- merged cluster QC summary
+- any final sample-overlay UMAP that helps assess mixed pockets or batch-driven artifacts
+
+Recommended workflow for phase 3:
+
+1. Identify the correct merged `adata` and merged label key.
+
+- Do not assume the default main `adata` file is the correct one.
+- Check whether a separate merged object exists for the final annotation round.
+- Confirm that the object contains the expected merged label key and final names.
+
+2. Identify the final merged visualization set.
+
+- Prefer the figures produced from the merged annotation round, not the earlier phase 1 clustering figures.
+- Use the final pretty UMAP and the sample-overlay UMAP as the main atlas illustrations when available.
+
+3. Extract atlas-level summary information.
+
+- Count cells per final population.
+- If helpful, calculate percentages of the total object.
+- Summarize higher-level compartments such as hepatocytes, endothelial, biliary, immune, stromal, mural, or other project-relevant branches.
+- Use the merged QC figures to assess whether the final atlas looks stable and globally interpretable.
+
+4. Write the report as a final annotation-state overview.
+
+- Summarize the final atlas at the level of named populations and compartments.
+- Use short interpretive summaries for each final population.
+- Mention remaining mixed boundaries only at the level needed to guide interpretation of the final atlas.
+
+5. Save a self-contained local report bundle.
+
+- Copy every figure used by the HTML into `phase3_overview_assets/`.
+- Use only relative asset references inside the HTML.
+
+Recommended section order for phase 3 overview reports:
+
+- `Phase 3 Overview`
+- `Scope`
+- `Global Atlas Structure`
+- `Compartment Summary`
+- `Global QC Context`
+- `Final Population Overview`
+- `Interpretive Notes`
+- `Practical Takeaway`
+
+Content expectations for each phase 3 section:
+
+- `Scope`:
+  State that this is a post-merge final-atlas report built from the merged object with final renamed populations.
+  Explicitly say that the purpose is to summarize the integrated annotation state rather than to annotate from scratch.
+
+- `Global Atlas Structure`:
+  Describe the overall architecture of the final atlas.
+  Name the dominant major compartments and state the total number of nuclei and final labeled populations when available.
+  Mention the broad visual read of the final UMAP, especially whether the atlas looks coherent after merge-back.
+
+- `Compartment Summary`:
+  Group final populations into biologically meaningful compartments.
+  For each compartment, list the final populations with final names and optionally cell counts and percentages.
+  Add one short explanatory summary sentence for the compartment.
+
+- `Global QC Context`:
+  Use merged cluster-size, batch-composition, silhouette, sample-overlay, and QC-summary plots to comment on whether the final atlas is globally acceptable.
+  Focus on final-atlas stability and interpretability rather than cluster-by-cluster troubleshooting.
+  If mixed pockets remain, state whether they look biologically expected or technically concerning.
+
+- `Final Population Overview`:
+  Provide a concise population-by-population summary using the final cluster ids and final names.
+  Each entry should be short, usually one sentence, and should describe the role of that population in the final atlas.
+  Do not turn this section into a deep-dive evidence recap.
+
+- `Interpretive Notes`:
+  Record any global biological caveats such as zonation continua, expected lineage interfaces, or especially small populations that should be interpreted with caution.
+
+- `Practical Takeaway`:
+  End with a short summary paragraph explaining whether the merged atlas is stable enough to use as the final integrated annotation state.
+
+Rules for phase 3 writing style:
+
+- Keep the tone report-like and final-state oriented.
+- Be more concise than a cluster deep-dive but more informative than a one-paragraph summary.
+- Use the final names exactly and consistently.
+- Prefer compartment language and atlas language over marker-discovery language.
+- Avoid repeatedly saying that evidence is strong or weak unless that directly matters for interpreting the merged atlas.
+- Keep mixed-boundary discussion proportional. Mention it when useful, but do not let small interface regions dominate the report.
+
+Rules for phase 3 HTML output:
+
+- Use the same clean single-page design language as the other reports.
+- Include a strong title and clear section blocks.
+- Embed the final merged atlas figures directly in the relevant sections.
+- Use clickable inline images with the same lightbox behavior used in the deep-dive and phase 1 reports.
+- Keep the HTML self-contained at the folder level by referencing only files inside `phase3_overview_assets/`.
+
+Recommended phase 3 figures:
+
+- final merged pretty UMAP with full legend
+- optional short-legend variant of the same UMAP
+- sample-overlay plus merged-label UMAP
+- cluster sizes
+- batch composition
+- silhouette by cluster
+- QC summary
+
+Rules for phase 3 TXT output:
+
+- Preserve the same section order and reasoning as the HTML report.
+- Do not include links or HTML.
+- Keep counts and percentages readable in plain text.
+
+Phase 3 should usually be generated only after:
+
+- phase 1 overview is complete
+- relevant phase 2 subset deep dives are complete
+- final names have been applied
+- subset annotations have been merged back into the main object
+
+If these conditions are not met, say that clearly and either:
+
+- stop and explain what is missing, or
+- generate a clearly labeled provisional phase 3 overview only if the user explicitly wants that.
+
 For doublet QC in phase 1 overview reports:
 
 - Do not use the per-sample doublet-fraction bar plot as a main illustrative figure when the thresholding procedure was configured to enforce a target doublet fraction.
