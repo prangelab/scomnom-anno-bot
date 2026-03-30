@@ -687,6 +687,10 @@ Use these portable working templates as defaults during execution:
 
 - Suggest a focused 9-gene panel that can defend the naming decision visually.
 - The panel should include strong identity markers and, where helpful, discriminating genes that could falsify the current hypothesis.
+- In phase 2 deep dives, do not assume a single panel is always enough.
+- When a cluster could plausibly be explained by several well-described state programs, it is encouraged to design multiple targeted panels and compare them.
+- Typical examples include helper, memory, cytotoxic, regulatory, exhausted, Tem, Trm, Temra, NK, activated, inflammatory, APC-like, scavenging, or lipid-associated programs.
+- Use extra panels when they materially clarify the state decision rather than treating them as optional decoration.
 
 7. Plot the panel genes using the persistent panel-session mechanism:
 
@@ -696,6 +700,7 @@ Use these portable working templates as defaults during execution:
   - dotplot
   - violin grid
   - UMAP feature grid
+- If multiple custom panels are appropriate, plot all of them through the same persistent session and keep their outputs organized in the relevant `panels/` location.
 
 8. Validate that all genes plotted successfully:
 
@@ -709,6 +714,8 @@ Use these portable working templates as defaults during execution:
 - Decide whether the custom panel supports the current naming decision.
 - If the panel weakens the current interpretation, set a revised identity hypothesis.
 - If needed, design and plot a new validation panel.
+- When multiple panels were generated, compare them jointly and use them together in the final reasoning.
+- In these cases, the report should explain which panel contributed which part of the interpretation.
 - Iterate until the evidence and the proposed label are consistent and satisfactory.
 
 10. Write the final annotation report:
