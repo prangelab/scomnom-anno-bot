@@ -8,6 +8,7 @@ It is designed to help with:
 
 - phase 1 overview annotation of full datasets or subset result trees
 - phase 2 deep-dive annotation of individual clusters
+- phase 3 final integrated atlas overview after subset labels are merged back into the main object
 - evidence-driven cell type naming based on markers, specificity, pathways, and literature
 - structured annotation-note generation in HTML and TXT formats
 - targeted 9-gene validation panel design and plotting through `scomnom`
@@ -189,6 +190,23 @@ Expected behavior:
 - annotate them serially using the active context
 - write one report per cluster
 
+### 6. Generate the final integrated atlas summary
+
+Example:
+
+```text
+Generate phase 3 overview
+```
+
+Expected behavior:
+
+- locate the merged main-object `adata` containing the final merged label key
+- use the final merged UMAP and merged QC figures rather than the earlier phase 1 backbone
+- summarize the final population names and compartment structure
+- report cell counts and atlas-level organization when available
+- comment briefly on any remaining mixed borders at atlas level
+- write a final integrated overview report into the main `annotation/` directory
+
 ## Commands
 
 These are the main command-style phrases `scomnom-anno-bot` is designed to understand.
@@ -223,16 +241,33 @@ Examples:
 - `Please do phase 1 here`
 - `Please make a phase 1 overview of the root clusters`
 - `Give me a rough overview of this subset`
+- `Generate phase 3 overview`
+- `Perform phase 3 overview`
 
 These requests should trigger the overview workflow rather than a deep-dive cluster memo.
+
+For `phase 3 overview`, the expected meaning is different from phase 1:
+
+- phase 1 is a first-pass annotation overview used to decide rough identities and subsetting priorities
+- phase 3 is a final integrated atlas overview used after phase 2 labels have been merged back into the main object
+- phase 3 should summarize the final names and compartments rather than re-arguing identities from scratch
 
 ## Output Conventions
 
 `scomnom-anno-bot` writes:
 
 - phase 1 overview reports as `.html` and `.txt`
+- phase 3 overview reports as `.html`, `.txt`, and `phase3_overview_assets/`
 - deep-dive cluster reports as `.html`, `.txt`, `.md`, and `CXX_assets/`
 - custom panel plots into the active context `panels/` directory
+
+Phase 3 reports are intended to be final-atlas memos. They should:
+
+- use the merged annotation object with the final merged label key
+- report the final population names exactly as they should be used going forward
+- summarize atlas compartments and relative abundances
+- use merged UMAP, sample-overlay, cluster-size, batch-composition, silhouette, and QC-summary figures when available
+- stay more concise than deep-dive reports while still being more structured than a short chat summary
 
 The HTML reports are designed for local browsing and should include:
 
