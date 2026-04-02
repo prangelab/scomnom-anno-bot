@@ -235,6 +235,7 @@ Phase 3 overview reports should summarize:
 - the final merged atlas structure after subset annotations were merged back into the main object
 - the final population names exactly as they should be reported going forward
 - the high-level compartment organization of the atlas
+- any additional renamed annotation layers present in the merged object, such as archetype, compartment, or supercompartment layers
 - the relative abundance of the final populations when available
 - global merged-atlas QC context that helps interpret the integrated result
 - concise per-population summaries written from the final names rather than from raw marker discovery
@@ -267,6 +268,14 @@ Recommended data inputs for phase 3:
 - merged cluster QC summary
 - any final sample-overlay UMAP that helps assess mixed pockets or batch-driven artifacts
 
+Additional phase 3 layer rule:
+
+- Check whether the final merged object contains additional renamed annotation layers beyond the main final label layer, for example archetype, compartment, supercompartment, or other user-defined categorical layers in `adata.obs`.
+- If such extra layers exist and are clearly intended as annotation layers, include them in the phase 3 overview.
+- For each extra layer, summarize the layer name, the number of unique labels, the labels themselves when the count is manageable, and cell counts and percentages per label when useful.
+- Before generating new UMAPs for an extra layer, first inspect the figure tree for existing outputs, especially `rename_roundN/` folders or similar rename-layer plotting outputs.
+- Only generate fresh categorical UMAPs for extra layers when suitable figures are missing or when the user explicitly asks for regeneration.
+
 Recommended workflow for phase 3:
 
 1. Identify the correct merged `adata` and merged label key.
@@ -279,6 +288,8 @@ Recommended workflow for phase 3:
 
 - Prefer the figures produced from the merged annotation round, not the earlier phase 1 clustering figures.
 - Use the final pretty UMAP and the sample-overlay UMAP as the main atlas illustrations when available.
+- Also inspect whether there are existing `rename_roundN/` or comparable rename-layer figure outputs that already visualize additional label layers.
+- Reuse those existing rename-layer figures when they match the current extra layers instead of regenerating them manually.
 
 3. Extract atlas-level summary information.
 
@@ -286,6 +297,7 @@ Recommended workflow for phase 3:
 - If helpful, calculate percentages of the total object.
 - Summarize higher-level compartments such as hepatocytes, endothelial, biliary, immune, stromal, mural, or other project-relevant branches.
 - Use the merged QC figures to assess whether the final atlas looks stable and globally interpretable.
+- If extra annotation layers exist, also count cells per extra-layer label and summarize those higher-abstraction layers alongside the granular final populations.
 
 4. Write the report as a final annotation-state overview.
 
@@ -303,6 +315,7 @@ Recommended section order for phase 3 overview reports:
 - `Phase 3 Overview`
 - `Scope`
 - `Global Atlas Structure`
+- `Additional Annotation Layers`
 - `Compartment Summary`
 - `Global QC Context`
 - `Final Population Overview`
@@ -319,6 +332,12 @@ Content expectations for each phase 3 section:
   Describe the overall architecture of the final atlas.
   Name the dominant major compartments and state the total number of nuclei and final labeled populations when available.
   Mention the broad visual read of the final UMAP, especially whether the atlas looks coherent after merge-back.
+
+- `Additional Annotation Layers`:
+  If extra renamed categorical layers exist, summarize them here.
+  State the layer names, the number of labels in each layer, and what level of abstraction they represent.
+  If existing rename-layer UMAPs are available, include them here.
+  If no extra layers are present, this section can be omitted.
 
 - `Compartment Summary`:
   Group final populations into biologically meaningful compartments.
@@ -355,6 +374,7 @@ Rules for phase 3 HTML output:
 - Use the same clean single-page design language as the other reports.
 - Include a strong title and clear section blocks.
 - Embed the final merged atlas figures directly in the relevant sections.
+- If extra-layer UMAPs already exist in the figure tree, embed those too in the `Additional Annotation Layers` section.
 - Use clickable inline images with the same lightbox behavior used in the deep-dive and phase 1 reports.
 - Keep the HTML self-contained at the folder level by referencing only files inside `phase3_overview_assets/`.
 
@@ -585,6 +605,7 @@ Portable panel templates are available in:
 
 - `templates/report_templates/panel_plot_template.py`
 - `templates/report_templates/panel_gene_list_template.txt`
+- `templates/report_templates/label_umap_template.py`
 
 Because `scOmnom` AnnData objects are often large, do not start a fresh Python process for every cluster panel. Instead, use one persistent Python session per working block when panel plotting is available:
 
@@ -618,6 +639,18 @@ Preferred plotting workflow:
   - `om.plotting.plot_de_umap_features_grid(...)`
 - Follow `templates/report_templates/panel_plot_template.py` as the default code skeleton for reusable panel generation.
 - Use `templates/report_templates/panel_gene_list_template.txt` as the default working template for recording proposed genes, replacements, and final accepted panels when helpful.
+
+Categorical label-layer UMAP workflow:
+
+- For categorical annotation layers stored in `adata.obs`, use `om.plotting.plot_de_umap_single(...)` as the portable default plotting entry point.
+- Treat this as the standard way to generate UMAPs for renamed layers such as archetype, compartment, or supercompartment labels.
+- Do not depend on pipeline-internal helpers for this portable workflow.
+- Prefer generating at least:
+  - one full-legend categorical UMAP
+  - one short-legend categorical UMAP when readability benefits from a simplified legend or on-data labels
+- Follow `templates/report_templates/label_umap_template.py` as the default reusable skeleton for categorical label-layer UMAP generation.
+- Before generating a new label-layer UMAP, first check whether a suitable figure already exists in the active figure tree, especially under `rename_roundN/` or comparable rename-output folders.
+- Only generate a new UMAP when an appropriate existing figure is missing or stale, or when the user explicitly asks for regeneration.
 
 If a persistent session has already successfully loaded `adata`, prefer reusing it rather than relaunching Python. Only restart the session if the kernel crashes, the environment changes, or memory becomes an issue.
 

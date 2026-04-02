@@ -9,3 +9,8 @@
 - Added repo `README.md`
 - Added `VERSION`
 - Added `LICENSE`
+
+## 0.2.0
+
+-- Added Phase 3 rpeorting
+-- Added UMAP generation commands
