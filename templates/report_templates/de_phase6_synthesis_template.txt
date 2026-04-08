@@ -1,0 +1,34 @@
+Phase 6 DE Synthesis
+
+Scope
+State the active context, the selected contrast, and the annotation layers included in the synthesis.
+Explain the biological meaning of the contrast using the correct `scOmnom` contrast semantics.
+
+Available Layers And Evidence
+List which phase 4 and phase 5 reports were used, which DE evidence sources are available, and whether pseudobulk support exists anywhere in the synthesis.
+
+Cross-Layer DE Summary
+Give the short atlas-level story for the contrast.
+State whether the signal is broad, focal, weak, compartment-specific, or mixed.
+
+Compartment-Level Themes
+Summarize the main biological themes by broad compartment.
+Prefer a small number of interpretable themes over exhaustive cluster-by-cluster restatement.
+
+Layer-Resolved Drivers
+Explain which fine-grained populations are driving the broad signals.
+State which broad effects sharpen, disappear, or change after refinement.
+
+Process Panels
+Describe the targeted custom process panels that were generated.
+Explain why those genes were chosen and what the panels show about the inferred biological process.
+
+Integrated Interpretation
+Turn the broad-to-fine signal into one coherent biological interpretation for the contrast.
+
+Confidence And Caveats
+State whether the synthesis is pseudobulk-backed, cell-level-only, concordant across layers, or still provisional.
+Be explicit about inflation risk, sparse subclusters, mixed programs, or technical ambiguity when relevant.
+
+Practical Takeaway
+End with a short paragraph stating the final biological message for the contrast and which populations matter most.

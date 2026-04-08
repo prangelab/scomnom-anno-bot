@@ -1,6 +1,6 @@
 # Purpose
 
-Version: `0.1.0`
+Version: `0.3.0`
 
 This `AGENTS.md` is a portable workflow guide for annotating `scOmnom` analysis outputs across projects. Use it as the shared workflow layer, and keep dataset-specific assumptions in a separate local override file when needed.
 
@@ -405,6 +405,472 @@ If these conditions are not met, say that clearly and either:
 
 - stop and explain what is missing, or
 - generate a clearly labeled provisional phase 3 overview only if the user explicitly wants that.
+
+Define these chat commands for atlas-level DE reporting:
+
+- `perform phase 4 de overview`
+- `generate phase 4 de overview`
+- `phase 4 de overview`
+
+Interpret these commands as a contrast-centric differential-expression overview workflow. The purpose is to summarize one DE run across the atlas, identify where signal is strongest, describe where signal is weak or skipped, and decide which clusters deserve phase 5 deep dives.
+
+When running a phase 4 DE overview:
+
+- Identify the correct DE-enabled object and the correct DE result tree for the active context.
+- Confirm the active annotation layer or round that the DE run is based on, for example `r4_subset_annotation` or `r5_archetypes`.
+- Confirm the exact contrast key and contrast pair under review.
+- Use `scOmnom` contrast-key semantics when interpreting the run:
+  - `A:B` means a composite condition key built from multiple `adata.obs` factors and is typically resolved internally to `A.B`.
+  - `A@B` means compare `A` within levels of `B`.
+  - `A^B` means a true interaction contrast.
+  - Dotted keys such as `sex.masld_status` often represent resolved composite keys created from colon input such as `sex:masld_status`.
+- Explain contrast names by their biological meaning, not just their folder names.
+- Treat this as a reporting and prioritization task, not as a rerun of DE testing.
+
+Store phase 4 DE overview outputs in the active context `annotation/phase4/` folder.
+
+For phase 4 DE overviews, create:
+
+- one structured `.html` overview report
+- one matching plain-text `.txt` overview report
+- one sibling asset bundle such as `de_phase4_<run_id>_assets/`
+
+Use filenames in this style:
+
+- `annotation/phase4/de_phase4_<run_id>.html`
+- `annotation/phase4/de_phase4_<run_id>.txt`
+- `annotation/phase4/de_phase4_<run_id>_assets/`
+
+The phase 4 DE overview should summarize:
+
+- the DE scope, including annotation layer, contrast key, and contrast pair
+- run settings that materially affect interpretation
+- which DE evidence sources are available:
+  - `cell_based/`
+  - `pseudobulk_DE/`
+- which clusters were testable, skipped, or weakly powered
+- where the strongest DE signal sits across the atlas
+- whether the signal is concentrated in a few compartments or distributed broadly
+- whether gene-level and pathway/regulator signals agree
+- which clusters should be prioritized for phase 5 deep dives
+- any global caveats such as interaction-only contrasts, sparse replicate support, or inflation-prone cell-level-only evidence
+
+Phase 4 reports should not:
+
+- restate every per-cluster result in equal detail
+- rerun DE by default
+- treat cell-level p-values as gold-standard evidence when pseudobulk is available
+- describe pathway outputs as long unranked term dumps
+
+Instead, phase 4 should read like an atlas-level DE triage memo:
+
+- concise
+- contrast-centered
+- explicit about evidence source availability
+- clear about where the real biology appears to be
+- clear about what deserves deeper review
+
+DE evidence-source rules:
+
+- Always check whether both `cell_based/` and `pseudobulk_DE/` result trees are present for the requested run.
+- If only `cell_based/` exists, use it and say clearly that replicate-aware pseudobulk evidence is unavailable.
+- If both `cell_based/` and `pseudobulk_DE/` exist, use both throughout the report.
+- Treat pseudobulk DE as the preferred inferential framework when replicate-aware results are available.
+- Treat cell-level ranksum or logistic-regression DE as supportive and potentially inflation-prone because large cell counts can drive very small p-values.
+- When both sources are present:
+  - weight pseudobulk more heavily for significance and robustness
+  - use cell-level results mainly for expression prevalence, within-cluster distribution, and direction consistency
+  - describe concordance as a confidence booster
+  - describe discordance explicitly rather than smoothing it over
+- Do not silently privilege cell-level significance over weaker or absent pseudobulk evidence.
+- For interaction contrasts, expect pseudobulk to be especially important because cell-level interaction contrasts may be skipped.
+
+Recommended data inputs for phase 4:
+
+- DE settings file for the requested contrast key
+- `__summary.csv` from `cell_based/` when available
+- `__summary.csv` from `pseudobulk_DE/` when available
+- selected per-cluster `combined.csv` tables for spot checks
+- existing DE figures:
+  - condition or contrast UMAPs
+  - volcano plots
+  - dotplots
+  - sample heatmaps
+  - decoupler outputs for DoRothEA, MSigDB, and PROGENy
+
+Additional phase 4 plotting and query rule:
+
+- Reuse existing pipeline figures first.
+- If the figure tree is insufficient to answer the interpretive question, generate targeted additional plots through the `scomnom` plotting API.
+- Suitable extra plots include contrast-split expression UMAPs, contrast-split violins, and targeted dotplots for selected genes.
+- Extra plots should be hypothesis-driven and used selectively.
+- If tables are insufficient, query the DE-enabled `adata` object directly in Python for targeted supporting summaries such as:
+  - per-group cell counts
+  - fraction expressing
+  - per-sample spread
+  - prevalence asymmetry
+- Prefer lightweight targeted summaries rather than building a second analysis pipeline.
+
+Recommended section order for phase 4 DE overview reports:
+
+- `Phase 4 DE Overview`
+- `Scope`
+- `Run Settings`
+- `Atlas-Level DE Summary`
+- `Coverage And Skip Summary`
+- `Differential Abundance Overview`
+- `Strongest Responding Clusters`
+- `Weak Or Ambiguous Clusters`
+- `Pathway And Regulator Overview`
+- `Priority Shortlist For Phase 5`
+- `Practical Takeaway`
+
+Content expectations for each phase 4 section:
+
+- `Scope`:
+  State the active context, annotation layer, DE round, contrast key, and selected contrast.
+  Explain the biological meaning of the contrast using the correct `scOmnom` condition-key semantics.
+
+- `Run Settings`:
+  Summarize only the DE settings that materially affect interpretation, such as engine, methods, minimum cell thresholds, explicit contrasts, and whether pseudobulk was run.
+
+- `Atlas-Level DE Summary`:
+  Describe the overall amplitude and distribution of DE signal across the atlas.
+  State whether the contrast appears strong, focal, diffuse, or weak.
+
+- `Coverage And Skip Summary`:
+  Summarize which clusters were tested successfully, skipped, or limited by low counts or low replicate support.
+  Use summary tables directly and be explicit about why clusters were skipped.
+
+- `Differential Abundance Overview`:
+  If DA outputs are available for the same layer and condition key, summarize whether any populations show credible abundance shifts.
+  Use the DA consensus table as the main backbone and explain whether DA is absent, weak, focal, or broad.
+  Highlight whether the contrast appears dominated by transcriptional state change, abundance change, or both.
+
+- `Strongest Responding Clusters`:
+  Highlight only the most compelling clusters.
+  Prefer clusters that have coherent biology and, when available, pseudobulk support.
+
+- `Weak Or Ambiguous Clusters`:
+  Highlight clusters where signal is weak, inflated-looking, discordant between sources, or too underpowered for confidence.
+
+- `Pathway And Regulator Overview`:
+  Summarize broad pathway and regulator patterns across the atlas.
+  Focus on agreement with the gene-level story and on compartment-level themes.
+
+- `Priority Shortlist For Phase 5`:
+  Name the best next deep-dive targets and explain why each one is worth a cluster-level report.
+
+- `Practical Takeaway`:
+  End with a short summary paragraph that says whether the contrast yielded a useful atlas-level biological story and where the trustworthy signals sit.
+
+Rules for phase 4 writing style:
+
+- Keep the report contrast-centered and atlas-level.
+- Prioritize interpretive clarity over exhaustiveness.
+- Be explicit about whether conclusions are based on cell-level only, pseudobulk only, or concordant across both.
+- Avoid overstating significance when the evidence is cell-level-only.
+- When DA is available, explain clearly whether the contrast is mainly a state-change story, an abundance-change story, or a combination of both.
+- If DA is available but non-significant, say that explicitly rather than leaving the reader to infer it.
+
+Rules for phase 4 HTML output:
+
+- Use the same clean single-page design language as the phase 1, phase 3, and deep-dive reports so outputs look consistent across projects.
+- Use bordered section blocks, inline galleries, and clickable lightbox-style figures.
+- Keep the HTML self-contained at the folder level by referencing only files inside the local asset folder.
+
+Rules for phase 4 TXT output:
+
+- Preserve the same section order and reasoning as the HTML report.
+- Do not include links or HTML.
+- Keep tables or count summaries readable in plain text.
+
+Define these chat commands for cluster-level DE reporting:
+
+- `perform phase 5 de report`
+- `generate phase 5 de report`
+- `phase 5 de report`
+- `perform phase 5 de reports on Cnn, ..., Ckk`
+
+Interpret these commands as cluster-and-contrast differential-expression deep dives. The purpose is to explain what changes in one specified cluster for one specified contrast, weigh the evidence across available DE sources, and produce a readable cluster-level DE memo.
+
+Store phase 5 DE outputs in the active context `annotation/phase5/` folder.
+
+For phase 5 DE reports, create:
+
+- one structured `.html` report
+- one matching plain-text `.txt` report
+- one matching `.md` report
+- one sibling asset bundle such as `de_phase5_<run_id>_<cluster>_assets/`
+
+Use filenames in this style:
+
+- `annotation/phase5/de_phase5_<run_id>_<cluster>.html`
+- `annotation/phase5/de_phase5_<run_id>_<cluster>.txt`
+- `annotation/phase5/de_phase5_<run_id>_<cluster>.md`
+- `annotation/phase5/de_phase5_<run_id>_<cluster>_assets/`
+
+Phase 5 reports should answer:
+
+- what changes in this cluster for the requested contrast
+- how strong and credible the evidence is
+- whether pseudobulk and cell-level evidence agree
+- whether the cluster also shows any differential abundance signal for the same contrast
+- which genes are higher in A and which are higher in B
+- whether pathway and regulator shifts support the gene-level story
+- whether the result looks biologically interpretable, weak, or potentially technical
+
+Recommended evidence hierarchy for phase 5:
+
+1. Pseudobulk DE, when available, as the preferred inferential backbone.
+2. The combined per-cluster DE table as the main cross-method summary.
+3. Differential abundance evidence for the same cluster and contrast, when available, as supporting context for whether the signal reflects state change, abundance change, or both.
+4. Cell-level DE for prevalence, direction, and shape of expression changes.
+5. Pathway and regulator outputs as a biological coherence layer.
+6. Extra targeted plotting or direct `adata` summaries only when needed to resolve ambiguity.
+
+Recommended section order for phase 5 DE reports:
+
+- `Phase 5 DE Report`
+- `Contrast Definition`
+- `Verdict`
+- `Testability And QC Context`
+- `Differential Abundance Context`
+- `Gene-Level DE Summary`
+- `Method And Source Agreement`
+- `Pathway And Activity Evidence`
+- `Contrast-Specific Validation Plots`
+- `Interpretation`
+- `Caveats Or Next-Step Notes`
+
+Content expectations for each phase 5 section:
+
+- `Contrast Definition`:
+  State the cluster, annotation layer, contrast key, and A-versus-B pair.
+  Explain the biological meaning of the contrast using the correct `scOmnom` syntax interpretation.
+
+- `Verdict`:
+  Give a concise but substantive summary of what the contrast appears to be doing in this cluster.
+  Explicitly say whether the conclusion is pseudobulk-backed, cell-level-only, or discordant across sources.
+
+- `Testability And QC Context`:
+  Summarize per-group cell counts, replicate support when available, and any QC limitations that materially affect the DE interpretation.
+
+- `Differential Abundance Context`:
+  If DA outputs are available for the same layer and contrast, summarize whether this population also changes in relative abundance.
+  State the DA direction when relevant and whether the DA evidence is significant, weak, or absent.
+  Use this section to clarify whether the cluster primarily shows transcriptional state change, abundance change, or both.
+
+- `Gene-Level DE Summary`:
+  Summarize the main up-in-A and up-in-B programs using the combined table as the backbone.
+  Prefer coherent gene programs over long lists.
+
+- `Method And Source Agreement`:
+  Compare `combined.csv`, method-specific tables, and pseudobulk evidence when present.
+  If cell-level significance is strong but pseudobulk is weak or absent, call that out explicitly as inflation-prone or provisional.
+
+- `Pathway And Activity Evidence`:
+  Explain how DoRothEA, MSigDB, and PROGENy support or complicate the gene-level readout.
+  Focus on biological interpretation, not term enumeration.
+
+- `Contrast-Specific Validation Plots`:
+  Reuse existing cluster-level volcanoes, dotplots, violins, heatmaps, and decoupler figures first.
+  If needed, add targeted extra plots through the `scomnom` plotting API, including contrast-split gene views.
+
+- `Interpretation`:
+  Provide a short integrative paragraph that explains what the cluster seems to be doing biologically in this contrast.
+
+- `Caveats Or Next-Step Notes`:
+  Use when the signal is weak, technically suspect, or would benefit from targeted follow-up.
+
+Rules for phase 5 writing style:
+
+- Keep the report cluster-centered and contrast-centered.
+- Use effect direction explicitly.
+- Do not let inflated cell-level p-values become the sole basis for a strong conclusion when pseudobulk is available.
+- If the result is weak or provisional, say so plainly.
+- When DA is available, integrate it into the interpretation explicitly.
+- Prefer clear statements such as:
+  - the cluster changes transcriptionally without detectable abundance change
+  - the cluster shows both transcriptional remodeling and abundance expansion
+  - the main difference is compositional rather than transcriptional
+
+Portable DE report templates are available in:
+
+- `templates/report_templates/de_phase4_overview_template.html`
+- `templates/report_templates/de_phase4_overview_template.txt`
+- `templates/report_templates/de_phase5_report_template.html`
+- `templates/report_templates/de_phase5_report_template.txt`
+- `templates/report_templates/de_phase6_synthesis_template.html`
+- `templates/report_templates/de_phase6_synthesis_template.txt`
+
+Use these templates as the default baseline for DE report structure so reports remain stylistically consistent across projects.
+
+Define these chat commands for cross-layer DE synthesis reporting:
+
+- `perform phase 6 de synthesis`
+- `generate phase 6 de synthesis`
+- `phase 6 de synthesis`
+- `perform phase 6 de overview`
+- `generate phase 6 de overview`
+- `phase 6 de overview`
+
+Interpret these commands as a final contrast-level DE synthesis workflow analogous to the phase 3 annotation overview. The purpose is to integrate the main conclusions from the relevant phase 4 and phase 5 reports for one selected contrast, summarize the cross-compartment biological story, and explain how that story resolves across multiple annotation layers when such layers are available.
+
+When running a phase 6 DE synthesis:
+
+- Identify the requested contrast key and exact A-versus-B contrast.
+- Identify every relevant DE-enabled annotation layer available in the active context, for example `r4_subset_annotation`, `r5_archetypes`, `r6_compartment`, or finer subset DE layers.
+- Treat phase 6 as a synthesis task built on top of earlier reports, not as a replacement for them.
+- Use the corresponding phase 4 report for each relevant layer as the atlas-level backbone.
+- Use the corresponding phase 5 reports for the shortlist clusters as the cluster-level detail layer.
+- If the needed phase 4 or phase 5 reports do not yet exist, generate them first before writing phase 6.
+- Re-open the underlying DE tables and figure trees when needed to verify or refine the synthesis rather than copying report language blindly.
+- Use the final annotation hierarchy, including phase 3 outputs and any rename layers, to relate broad and fine compartments correctly.
+- Explain contrast names by their biological meaning using the correct `scOmnom` condition-key semantics.
+
+Store phase 6 DE synthesis outputs in the active context `annotation/phase6/` folder.
+
+For phase 6 DE synthesis reports, create:
+
+- one structured `.html` synthesis report
+- one matching plain-text `.txt` synthesis report
+- one sibling asset bundle such as `de_phase6_<run_id>_assets/`
+
+Use filenames in this style:
+
+- `annotation/phase6/de_phase6_<run_id>.html`
+- `annotation/phase6/de_phase6_<run_id>.txt`
+- `annotation/phase6/de_phase6_<run_id>_assets/`
+
+The phase 6 DE synthesis should summarize:
+
+- the selected contrast and the layers included in the synthesis
+- the main atlas-level DE story for that contrast
+- which broad compartments show signal
+- which fine-grained populations drive, refine, or contradict the broad signal
+- how concordant the story is across annotation layers
+- whether the result points to identifiable biological processes such as inflammation, bile-acid handling, scavenging identity, stress, remodeling, or metabolic reprogramming
+- which custom process panels were generated and why
+- the final integrated biological interpretation for the contrast
+- the overall confidence level based on pseudobulk availability, cell-level-only limitations, and cross-layer agreement
+
+Phase 6 reports should not:
+
+- repeat every phase 4 and phase 5 paragraph in full
+- devolve into a long list of cluster summaries
+- treat coarse and fine annotation layers as independent unrelated analyses
+- assert a broad process label such as inflammation or bile-acid transport without checking whether the gene-level evidence supports it
+
+Instead, phase 6 should read like a final DE memo for one contrast:
+
+- synthesis-centered
+- biologically interpretable
+- explicit about broad-to-fine lineage resolution
+- explicit about evidence strengths and limitations
+- more concise than the total set of phase 4 and phase 5 reports it summarizes
+
+Recommended data inputs for phase 6:
+
+- the relevant phase 4 DE overview reports for the requested contrast across available layers
+- the relevant phase 5 DE reports for priority clusters across available layers
+- the matching DE settings files and `__summary.csv` tables
+- selected underlying `combined.csv` cluster tables for spot checks
+- phase 3 overview outputs and any active label-hierarchy layers
+- existing DE figures and decoupler outputs
+- direct `adata` queries when needed for supporting counts, prevalence, or cross-layer mapping checks
+
+Cross-layer synthesis rules:
+
+- Always ask whether the same biological signal is visible at more than one annotation resolution.
+- If a broad layer shows a signal and a finer layer resolves it into one or a few driving populations, say that explicitly.
+- If a broad signal disappears after splitting, say that explicitly and interpret whether that means dilution, heterogeneity, or loss of power.
+- If finer layers disagree with the broad layer, explain whether the disagreement is biological, statistical, or technical.
+- Prefer statements of the form:
+  - broad compartment summary
+  - finer driver populations
+  - whether the broad story survives refinement
+- Good synthesis language includes examples such as:
+  - a macrophage signal at the archetype level is mainly driven by recruited macrophages rather than resident Kupffer cells
+  - a broad endothelial signal is preserved specifically in sinusoidal endothelial cells and not in vascular endothelial cells
+
+Phase 6 process-panel rule:
+
+- If phase 4 and phase 5 jointly suggest a coherent process such as inflammation, bile-acid transport, complement handling, endothelial activation, scavenging identity, stress, or remodeling, create at least one targeted custom panel for that process.
+- Prefer genes that are both:
+  - biologically central to the inferred process
+  - present in the significant DE signal when possible
+- If the core process genes are not all present among the strongest DE hits, it is acceptable to supplement with canonical process genes.
+- Use the `scomnom` plotting API to generate contrast-aware custom plots when possible.
+- Prefer targeted plots that clarify the synthesis, for example:
+  - contrast-split expression UMAPs
+  - contrast-split violins
+  - targeted dotplots across the driving clusters or layers
+- Keep custom panels hypothesis-driven and limited to the processes actually discussed in the report.
+
+Recommended section order for phase 6 DE synthesis reports:
+
+- `Phase 6 DE Synthesis`
+- `Scope`
+- `Available Layers And Evidence`
+- `Cross-Layer DE Summary`
+- `Compartment-Level Themes`
+- `Layer-Resolved Drivers`
+- `Process Panels`
+- `Integrated Interpretation`
+- `Confidence And Caveats`
+- `Practical Takeaway`
+
+Content expectations for each phase 6 section:
+
+- `Scope`:
+  State the active context, the selected contrast, and the layers being synthesized.
+  Explain the contrast biologically using the correct `scOmnom` contrast semantics.
+
+- `Available Layers And Evidence`:
+  Summarize which phase 4 and phase 5 reports were used, which DE sources exist, and whether pseudobulk support is available anywhere in the synthesis.
+
+- `Cross-Layer DE Summary`:
+  Give the short atlas-level story for the contrast and say whether it is broad, focal, or weak.
+
+- `Compartment-Level Themes`:
+  Summarize the main biological themes by broad compartment, such as parenchymal, immune, endothelial, biliary, or stromal.
+
+- `Layer-Resolved Drivers`:
+  Explain which finer populations are driving the broad signals and which broad effects disappear or sharpen after refinement.
+
+- `Process Panels`:
+  Describe the targeted custom panels that were generated, why those genes were chosen, and what they show about the inferred biological process.
+
+- `Integrated Interpretation`:
+  Provide a synthesis paragraph that turns the broad-to-fine signal into one coherent biological readout for the contrast.
+
+- `Confidence And Caveats`:
+  State whether the synthesis is supported by pseudobulk, by cell-level-only evidence, by cross-layer agreement, or by targeted panels.
+  Be explicit about inflation risk, sparse subclusters, or mixed programs when relevant.
+
+- `Practical Takeaway`:
+  End with a concise statement of the final biological message for the contrast and which populations matter most.
+
+Rules for phase 6 writing style:
+
+- Write phase 6 as a synthesis memo, not as another raw DE screen.
+- Prefer cross-layer biological claims over cluster-by-cluster recitation.
+- Use explicit broad-to-fine language.
+- Be cautious about process naming unless the gene-level evidence and custom panels support it.
+- Treat pseudobulk-supported conclusions as stronger than cell-level-only conclusions.
+
+Rules for phase 6 HTML output:
+
+- Use the same clean single-page design language as the phase 3, phase 4, and phase 5 reports so outputs look consistent across projects.
+- Use bordered sections, inline galleries, and local copied assets only.
+- Copy every figure used by the HTML into `de_phase6_<run_id>_assets/`.
+
+Rules for phase 6 TXT output:
+
+- Preserve the same section order and synthesis logic as the HTML report.
+- Keep the prose readable without links or HTML.
+- Refer to custom panels clearly in text so the reasoning remains understandable even without the figures.
 
 For doublet QC in phase 1 overview reports:
 

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 5 DE Report Template</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #fffdf8;
+      --text: #1f1f1f;
+      --muted: #5b5b5b;
+      --accent: #1e5a7a;
+      --border: #d9d3c7;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin: 0 0 20px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.15;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    p, li, td, th { font-size: 1rem; }
+    .label { font-size: 1.05rem; font-weight: 700; }
+    .muted { color: var(--muted); }
+    code, pre {
+      font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.95rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #f0ece2; font-family: Arial, Helvetica, sans-serif; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    figure {
+      margin: 0;
+      border: 1px solid var(--border);
+      background: #faf7f0;
+      padding: 10px;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    figcaption {
+      margin-top: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .thumb { cursor: zoom-in; }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20, 20, 20, 0.88);
+      padding: 28px;
+      z-index: 9999;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: min(94vw, 1500px);
+      max-height: 92vh;
+    }
+    .lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 92vh;
+      width: auto;
+      height: auto;
+      border: 2px solid #e8e1d4;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      background: white;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #d9d3c7;
+      border-radius: 999px;
+      background: #fffdf8;
+      color: #1f1f1f;
+      font: inherit;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Phase 5 DE Report</h1>
+      <p class="muted">Cluster-level contrast memo template</p>
+    </section>
+
+    <section>
+      <h2>Contrast Definition</h2>
+      <p>
+        State the cluster, annotation layer, contrast key, and A-versus-B pair. Explain the biological meaning of the contrast and whether it is a simple factor, a within-group comparison, or an interaction.
+      </p>
+    </section>
+
+    <section>
+      <h2>Verdict</h2>
+      <p class="label">Short one-sentence DE verdict</p>
+      <p>
+        Give one concise but substantive paragraph summarizing what the contrast appears to be doing in this cluster. Explicitly state whether the conclusion is pseudobulk-backed, cell-level-only, or discordant across sources.
+      </p>
+    </section>
+
+    <section>
+      <h2>Testability And QC Context</h2>
+      <p>
+        Summarize per-group cell counts, replicate support when available, and any QC limitations that materially affect confidence.
+      </p>
+    </section>
+
+    <section>
+      <h2>Gene-Level DE Summary</h2>
+      <p>
+        Summarize the main up-in-A and up-in-B programs using the combined table as the backbone. Prefer coherent programs over long ranked lists.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Direction</th>
+            <th>Main Genes</th>
+            <th>Interpretation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A higher</td>
+            <td><code>GENE1</code>, <code>GENE2</code>, <code>GENE3</code></td>
+            <td>Short biological summary.</td>
+          </tr>
+          <tr>
+            <td>B higher</td>
+            <td><code>GENE4</code>, <code>GENE5</code>, <code>GENE6</code></td>
+            <td>Short biological summary.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Method And Source Agreement</h2>
+      <p>
+        Compare the combined table, method-specific tables, and pseudobulk evidence when present. Explain whether the result is concordant, cell-level-only, pseudobulk-dominant, or discordant.
+      </p>
+    </section>
+
+    <section>
+      <h2>Pathway And Activity Evidence</h2>
+      <p>
+        Explain how DoRothEA, MSigDB, and PROGENy support or complicate the gene-level readout. Keep the interpretation biological and concise.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/dorothea.png" alt="DoRothEA placeholder">
+          <figcaption>DoRothEA placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/hallmark.png" alt="Hallmark placeholder">
+          <figcaption>MSigDB placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/progeny.png" alt="PROGENy placeholder">
+          <figcaption>PROGENy placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Contrast-Specific Validation Plots</h2>
+      <p>
+        Reuse existing cluster-level volcanoes, dotplots, violins, heatmaps, and decoupler figures first. Add targeted contrast-split plots only when they materially clarify the result.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/volcano.png" alt="Volcano placeholder">
+          <figcaption>Volcano placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/dotplot.png" alt="Dotplot placeholder">
+          <figcaption>Dotplot placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/violin.png" alt="Violin placeholder">
+          <figcaption>Violin placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/sample_heatmap.png" alt="Sample heatmap placeholder">
+          <figcaption>Sample heatmap placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Interpretation</h2>
+      <p>
+        Give one short integrative paragraph explaining what this cluster appears to be doing biologically in the requested contrast.
+      </p>
+    </section>
+
+    <section>
+      <h2>Caveats Or Next-Step Notes</h2>
+      <p>
+        Use this section when the signal is weak, technically suspect, inflation-prone, or would benefit from targeted follow-up.
+      </p>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">x</button>
+      <img id="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const closeButton = document.getElementById("lightbox-close");
+      const thumbs = document.querySelectorAll(".thumb");
+
+      function openLightbox(src, alt) {
+        lightboxImage.src = src;
+        lightboxImage.alt = alt || "";
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+      }
+
+      thumbs.forEach((img) => {
+        img.addEventListener("click", () => openLightbox(img.src, img.alt));
+      });
+
+      closeButton.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeLightbox();
+      });
+    })();
+  </script>
+</body>
+</html>

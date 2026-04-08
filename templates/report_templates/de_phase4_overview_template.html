@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 4 DE Overview Template</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #fffdf8;
+      --text: #1f1f1f;
+      --muted: #5b5b5b;
+      --accent: #1e5a7a;
+      --border: #d9d3c7;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin: 0 0 20px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.15;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    p, li, td, th { font-size: 1rem; }
+    .muted { color: var(--muted); }
+    code, pre {
+      font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.95rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #f0ece2; font-family: Arial, Helvetica, sans-serif; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    figure {
+      margin: 0;
+      border: 1px solid var(--border);
+      background: #faf7f0;
+      padding: 10px;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    figcaption {
+      margin-top: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .thumb { cursor: zoom-in; }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20, 20, 20, 0.88);
+      padding: 28px;
+      z-index: 9999;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: min(94vw, 1500px);
+      max-height: 92vh;
+    }
+    .lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 92vh;
+      width: auto;
+      height: auto;
+      border: 2px solid #e8e1d4;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      background: white;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #d9d3c7;
+      border-radius: 999px;
+      background: #fffdf8;
+      color: #1f1f1f;
+      font: inherit;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Phase 4 DE Overview</h1>
+      <p class="muted">Atlas-level contrast summary template</p>
+    </section>
+
+    <section>
+      <h2>Scope</h2>
+      <p>
+        State the active context, annotation layer, DE round, contrast key, and selected contrast. Explain the biological meaning of the contrast and whether this run uses a simple factor, a composite condition, a within-group contrast, or an interaction.
+      </p>
+    </section>
+
+    <section>
+      <h2>Run Settings</h2>
+      <p>
+        Summarize the DE settings that materially affect interpretation, including engine, available evidence sources, explicit contrasts, minimum count thresholds, and whether pseudobulk was run.
+      </p>
+    </section>
+
+    <section>
+      <h2>Atlas-Level DE Summary</h2>
+      <p>
+        Give a concise summary of how strong and how distributed the signal appears across the atlas. State whether the contrast looks focal, diffuse, weak, or compartment-specific.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/condition_umap.png" alt="Condition UMAP placeholder">
+          <figcaption>Condition or contrast UMAP placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/de_overview_dotplot.png" alt="DE overview dotplot placeholder">
+          <figcaption>Overview dotplot placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Coverage And Skip Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Cluster</th>
+            <th>Status</th>
+            <th>Evidence Sources</th>
+            <th>Main Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>C00</code></td>
+            <td>Tested or skipped</td>
+            <td>Cell-level only, pseudobulk only, or both</td>
+            <td>One short sentence on power, skip reason, or confidence level.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Strongest Responding Clusters</h2>
+      <p>
+        Highlight only the clusters with the most interpretable signal. Prefer those with coherent biology and replicate-aware support when pseudobulk is available.
+      </p>
+    </section>
+
+    <section>
+      <h2>Weak Or Ambiguous Clusters</h2>
+      <p>
+        Summarize clusters that look underpowered, inflation-prone, discordant across sources, or otherwise not yet convincing.
+      </p>
+    </section>
+
+    <section>
+      <h2>Pathway And Regulator Overview</h2>
+      <p>
+        Summarize broad pathway and regulator shifts across the atlas. Explain how DoRothEA, MSigDB, and PROGENy agree with or complicate the gene-level story.
+      </p>
+      <div class="gallery">
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/dorothea_overview.png" alt="DoRothEA placeholder">
+          <figcaption>DoRothEA overview placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/hallmark_overview.png" alt="Hallmark placeholder">
+          <figcaption>MSigDB overview placeholder.</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="TEMPLATE_assets/progeny_overview.png" alt="PROGENy placeholder">
+          <figcaption>PROGENy overview placeholder.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Priority Shortlist For Phase 5</h2>
+      <ul>
+        <li>Name the first cluster that deserves a DE deep dive and why.</li>
+        <li>Name the second cluster if warranted.</li>
+        <li>Note any cluster that looks tempting but is still too weak or too underpowered.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Practical Takeaway</h2>
+      <p>
+        End with a short paragraph stating whether the contrast produced a useful atlas-level story and where the most trustworthy DE signal sits.
+      </p>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">x</button>
+      <img id="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const closeButton = document.getElementById("lightbox-close");
+      const thumbs = document.querySelectorAll(".thumb");
+
+      function openLightbox(src, alt) {
+        lightboxImage.src = src;
+        lightboxImage.alt = alt || "";
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+      }
+
+      thumbs.forEach((img) => {
+        img.addEventListener("click", () => openLightbox(img.src, img.alt));
+      });
+
+      closeButton.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeLightbox();
+      });
+    })();
+  </script>
+</body>
+</html>

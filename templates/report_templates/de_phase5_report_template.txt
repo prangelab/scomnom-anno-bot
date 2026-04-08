@@ -1,0 +1,34 @@
+Phase 5 DE Report
+
+Contrast Definition
+State the cluster, annotation layer, contrast key, and A-versus-B pair.
+Explain the biological meaning of the contrast and whether it is a simple factor, a within-group comparison, or an interaction.
+
+Verdict
+Give one concise but substantive paragraph summarizing what the contrast appears to be doing in this cluster.
+Explicitly state whether the conclusion is pseudobulk-backed, cell-level-only, or discordant across sources.
+
+Testability And QC Context
+Summarize per-group cell counts, replicate support when available, and any QC limitations that materially affect confidence.
+
+Gene-Level DE Summary
+Summarize the main up-in-A and up-in-B programs using the combined table as the backbone.
+Prefer coherent programs over long ranked lists.
+
+Method And Source Agreement
+Compare the combined table, method-specific tables, and pseudobulk evidence when present.
+Explain whether the result is concordant, cell-level-only, pseudobulk-dominant, or discordant.
+
+Pathway And Activity Evidence
+Explain how DoRothEA, MSigDB, and PROGENy support or complicate the gene-level readout.
+Keep the interpretation biological and concise.
+
+Contrast-Specific Validation Plots
+Describe which existing volcanoes, dotplots, violins, heatmaps, and decoupler figures were most informative.
+If extra contrast-split plots were needed, explain why they were added and what they clarified.
+
+Interpretation
+Give one short integrative paragraph explaining what this cluster appears to be doing biologically in the requested contrast.
+
+Caveats Or Next-Step Notes
+Use this section when the signal is weak, technically suspect, inflation-prone, or would benefit from targeted follow-up.

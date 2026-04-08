@@ -1,6 +1,6 @@
 # scomnom-anno-bot
 
-Version: `0.1.0`
+Version: `0.4.0`
 
 `scomnom-anno-bot` is a portable annotation workflow for reviewing `scOmnom` analysis outputs with an agentic LLM.
 
@@ -9,9 +9,14 @@ It is designed to help with:
 - phase 1 overview annotation of full datasets or subset result trees
 - phase 2 deep-dive annotation of individual clusters
 - phase 3 final integrated atlas overview after subset labels are merged back into the main object
+- phase 4 atlas-level DE overview for one selected contrast
+- phase 5 cluster-level DE deep dive for one selected contrast and cluster
+- phase 6 cross-layer DE synthesis overview for one selected contrast
 - evidence-driven cell type naming based on markers, specificity, pathways, and literature
-- structured annotation-note generation in HTML and TXT formats
+- structured annotation and DE note generation in HTML and TXT formats
 - targeted 9-gene validation panel design and plotting through `scomnom`
+- targeted DE follow-up plotting through `scomnom`
+- process-focused DE synthesis panels through `scomnom`
 - keeping annotation workflow conventions consistent across projects
 
 `scomnom-anno-bot` is intended for use inside a `scOmnom` project results folder, with the actual dataset-specific assumptions stored locally in `project-local.md`.
@@ -21,7 +26,7 @@ It is designed to help with:
 `scomnom-anno-bot` provides:
 
 - a portable `AGENTS.md` with startup checks, annotation workflow rules, report conventions, and panel-plotting workflow
-- portable report templates for deep dives and phase 1 overviews
+- portable report templates for phase 1, phase 3, phase 4, phase 5, and phase 6 style outputs
 - a starter template for `project-local.md`
 - a structured command vocabulary for common annotation tasks
 
@@ -34,6 +39,18 @@ The workflow is built around the idea that cluster annotation should be based on
 - clustering QC when relevant
 - targeted custom validation panels
 - literature support
+
+For DE reporting, the workflow is built around:
+
+- DE summary tables
+- cluster-level combined DE tables
+- cell-level and pseudobulk DE source agreement when both are available
+- pathway and regulator outputs from MSigDB, DoRothEA, and PROGENy
+- targeted additional plotting or `adata` queries only when the exported figures and tables are insufficient
+- cross-layer synthesis across broad and fine annotation layers
+- targeted process panels when the integrated signal supports a coherent biology
+
+When both cell-level and pseudobulk DE are available, `scomnom-anno-bot` should weigh pseudobulk more heavily for inferential confidence because cell-level ranksum-style testing can be inflation-prone in large single-cell datasets.
 
 ## Requirements
 
@@ -207,6 +224,57 @@ Expected behavior:
 - comment briefly on any remaining mixed borders at atlas level
 - write a final integrated overview report into the main `annotation/` directory
 
+### 7. Generate an atlas-level DE overview
+
+Example:
+
+```text
+Generate phase 4 DE overview for r4_subset_annotation masld_status better_vs_worse
+```
+
+Expected behavior:
+
+- locate the correct DE result tree for the active context and layer
+- identify whether `cell_based/` only or both `cell_based/` and `pseudobulk_DE/` are available
+- summarize which clusters were testable, skipped, or weakly powered
+- describe where the strongest DE signal sits across the atlas
+- shortlist the best phase 5 targets
+- write a structured DE overview report into `annotation/phase4/`
+
+### 8. Deep-dive one cluster for one contrast
+
+Example:
+
+```text
+Generate phase 5 DE report for C03 in masld_status better_vs_worse
+```
+
+Expected behavior:
+
+- use the per-cluster combined DE table as the main backbone
+- weigh pseudobulk more heavily than cell-level significance when both are available
+- summarize genes higher in A versus genes higher in B
+- inspect pathway and regulator figures
+- add targeted extra plots through `scomnom` only when needed
+- write a structured DE report into `annotation/phase5/`
+
+### 9. Synthesize one contrast across layers
+
+Example:
+
+```text
+Generate phase 6 DE synthesis for masld_status better_vs_worse
+```
+
+Expected behavior:
+
+- identify the relevant phase 4 and phase 5 reports for that contrast across the available annotation layers
+- generate missing phase 4 or phase 5 prerequisites first if needed
+- integrate broad and fine layers into one final contrast-level DE memo
+- explain which fine-grained populations are driving the broad compartment signals
+- generate targeted custom process panels when the integrated signal supports a coherent biology
+- write a structured synthesis report into `annotation/phase6/`
+
 ## Commands
 
 These are the main command-style phrases `scomnom-anno-bot` is designed to understand.
@@ -243,6 +311,12 @@ Examples:
 - `Give me a rough overview of this subset`
 - `Generate phase 3 overview`
 - `Perform phase 3 overview`
+- `Generate phase 4 DE overview`
+- `Perform phase 4 DE overview`
+- `Generate phase 5 DE report for Cnn`
+- `Perform phase 5 DE reports on Cnn, ..., Ckk`
+- `Generate phase 6 DE synthesis`
+- `Perform phase 6 DE overview`
 
 These requests should trigger the overview workflow rather than a deep-dive cluster memo.
 
@@ -252,12 +326,27 @@ For `phase 3 overview`, the expected meaning is different from phase 1:
 - phase 3 is a final integrated atlas overview used after phase 2 labels have been merged back into the main object
 - phase 3 should summarize the final names and compartments rather than re-arguing identities from scratch
 
+For the DE phases:
+
+- phase 4 is an atlas-level DE triage memo for one selected contrast
+- phase 5 is a cluster-level DE memo for one selected contrast and cluster
+- phase 6 is a final contrast-level DE synthesis memo that integrates phase 4 and phase 5 across available annotation layers
+- DE reports should use `scOmnom` contrast-key semantics:
+  - `A:B` builds a composite key, usually resolved internally as `A.B`
+  - `A@B` means compare `A` within levels of `B`
+  - `A^B` means interaction
+- when both `cell_based/` and `pseudobulk_DE/` exist, pseudobulk should be weighted more heavily for inferential confidence
+- phase 6 should explicitly connect broad layers and fine layers when both are available
+
 ## Output Conventions
 
 `scomnom-anno-bot` writes:
 
 - phase 1 overview reports as `.html` and `.txt`
 - phase 3 overview reports as `.html`, `.txt`, and `phase3_overview_assets/`
+- phase 4 DE overview reports in `annotation/phase4/` as `.html`, `.txt`, and `de_phase4_<run_id>_assets/`
+- phase 5 DE reports in `annotation/phase5/` as `.html`, `.txt`, `.md`, and `de_phase5_<run_id>_<cluster>_assets/`
+- phase 6 DE synthesis reports in `annotation/phase6/` as `.html`, `.txt`, and `de_phase6_<run_id>_assets/`
 - deep-dive cluster reports as `.html`, `.txt`, `.md`, and `CXX_assets/`
 - custom panel plots into the active context `panels/` directory
 
@@ -276,12 +365,32 @@ The HTML reports are designed for local browsing and should include:
 - local copied assets
 - click-to-enlarge image overlays
 
+DE reports should:
+
+- reuse the existing DE tables and figure trees before generating anything extra
+- treat pseudobulk as the preferred inferential source when available
+- use cell-level DE mainly for expression prevalence, within-cluster distribution, and direction consistency
+- generate targeted extra `scomnom` plots or direct `adata` summaries only when the exported outputs are insufficient for interpretation
+
+Phase 6 synthesis reports should:
+
+- use phase 4 as the atlas-level backbone and phase 5 as the cluster-level detail layer
+- integrate broad and fine annotation layers explicitly when both are available
+- explain which fine-grained populations are driving the broad signals
+- generate targeted custom process panels when the integrated signal supports a coherent biology
+
 ## Templates
 
 Portable templates are included in:
 
 - `templates/report_templates/deep_dive_template.html`
 - `templates/report_templates/deep_dive_template.txt`
+- `templates/report_templates/de_phase4_overview_template.html`
+- `templates/report_templates/de_phase4_overview_template.txt`
+- `templates/report_templates/de_phase5_report_template.html`
+- `templates/report_templates/de_phase5_report_template.txt`
+- `templates/report_templates/de_phase6_synthesis_template.html`
+- `templates/report_templates/de_phase6_synthesis_template.txt`
 - `templates/report_templates/phase1_overview_template.html`
 - `templates/report_templates/phase1_overview_template.txt`
 - `templates/report_templates/project-local.example.md`
