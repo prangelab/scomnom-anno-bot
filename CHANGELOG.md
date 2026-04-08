@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0
+
+- Added phase 7 final project-level biological synthesis workflow to `AGENTS.md`
+- Added phase 7 guidance for:
+  - integrating phase 3 through phase 6 into one dataset-level memo
+  - distinguishing predictive baseline biology from mechanistic and longitudinal biology
+  - integrating DE and DA at the project level
+  - using targeted process panels for the final synthesis
+- Added reusable phase 7 report templates
+- Updated `README.md` to document phase 7 commands, outputs, and templates
+- Bumped shared workflow version to `0.5.0`
+
 ## 0.1.0
 
 - Initial portable release of `scomnom-anno-bot`

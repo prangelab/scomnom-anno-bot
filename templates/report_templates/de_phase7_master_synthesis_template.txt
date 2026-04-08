@@ -1,0 +1,37 @@
+Phase 7 Biological Synthesis
+
+Scope
+{{scope}}
+
+Study Design
+{{study_design}}
+
+Final Atlas Context
+{{final_atlas_context}}
+
+Global Biological Findings
+{{global_biological_findings}}
+
+Predictive Signals
+{{predictive_signals}}
+
+Mechanistic And Longitudinal Signals
+{{mechanistic_and_longitudinal_signals}}
+
+Differential Expression And Abundance Integration
+{{de_and_da_integration}}
+
+Cross-Layer Resolution
+{{cross_layer_resolution}}
+
+Process Panels
+{{process_panels}}
+
+Integrated Interpretation
+{{integrated_interpretation}}
+
+Confidence And Limitations
+{{confidence_and_limitations}}
+
+Final Takeaway
+{{final_takeaway}}

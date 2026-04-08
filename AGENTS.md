@@ -703,6 +703,8 @@ Portable DE report templates are available in:
 - `templates/report_templates/de_phase5_report_template.txt`
 - `templates/report_templates/de_phase6_synthesis_template.html`
 - `templates/report_templates/de_phase6_synthesis_template.txt`
+- `templates/report_templates/de_phase7_master_synthesis_template.html`
+- `templates/report_templates/de_phase7_master_synthesis_template.txt`
 
 Use these templates as the default baseline for DE report structure so reports remain stylistically consistent across projects.
 
@@ -871,6 +873,187 @@ Rules for phase 6 TXT output:
 - Preserve the same section order and synthesis logic as the HTML report.
 - Keep the prose readable without links or HTML.
 - Refer to custom panels clearly in text so the reasoning remains understandable even without the figures.
+
+Use these templates as the default baseline for dataset-level biological synthesis reports:
+
+- `templates/report_templates/de_phase7_master_synthesis_template.html`
+- `templates/report_templates/de_phase7_master_synthesis_template.txt`
+
+Define these chat commands for final project-level biological synthesis reporting:
+
+- `perform phase 7 synthesis`
+- `generate phase 7 synthesis`
+- `phase 7 synthesis`
+- `perform phase 7 biological synthesis`
+- `generate phase 7 biological synthesis`
+- `phase 7 biological synthesis`
+- `perform phase 7 overview`
+- `generate phase 7 overview`
+- `phase 7 overview`
+
+Interpret these commands as the final project-level biological synthesis workflow. The purpose is to integrate the main conclusions from the annotation phases and the DE phases into one succinct, dataset-wide memo that explains what biological changes are present overall. Unlike phase 6, which is still one-contrast-at-a-time, phase 7 should bring the full project together into one coherent narrative.
+
+When running a phase 7 synthesis:
+
+- Treat phase 7 as a synthesis task built on top of earlier reports, not as a replacement for them.
+- Use the final annotation hierarchy from phase 3 as the atlas backbone.
+- Use phase 4, phase 5, and phase 6 reports as the DE and DA evidence backbone.
+- If essential phase 3, phase 4, phase 5, or phase 6 reports do not yet exist, generate the missing prerequisites first.
+- Re-open the underlying annotation, DE, and DA tables when needed to verify the high-level synthesis rather than copying report language blindly.
+- Explain the study design explicitly when it matters for interpretation, for example baseline predictive contrasts versus post-intervention mechanistic contrasts.
+- Integrate broad and fine annotation layers explicitly when both are available.
+- Summarize both what changes and what does not change.
+- Be explicit about whether the project-level story is dominated by transcriptional state change, abundance change, or both.
+- Use targeted custom process panels when needed to sharpen a project-level biological conclusion.
+
+Store phase 7 synthesis outputs in the active context `annotation/phase7/` folder.
+
+For phase 7 synthesis reports, create:
+
+- one structured `.html` synthesis report
+- one matching plain-text `.txt` synthesis report
+- one sibling asset bundle such as `de_phase7_master_synthesis_assets/`
+
+Use filenames in this style:
+
+- `annotation/phase7/de_phase7_master_synthesis.html`
+- `annotation/phase7/de_phase7_master_synthesis.txt`
+- `annotation/phase7/de_phase7_master_synthesis_assets/`
+
+The phase 7 synthesis should summarize:
+
+- the study design and what each major contrast means biologically
+- the final atlas structure and main annotated compartments
+- the strongest biological changes seen across the full project
+- which findings look most predictive at baseline when relevant
+- which findings look most mechanistic after intervention or over time when relevant
+- which broad compartment signals resolve into specific finer driver populations
+- whether the dominant changes are transcriptional state changes, abundance changes, or both
+- which signals remain weak, absent, or unconvincing
+- which targeted custom panels were generated and why
+- the final project-level biological interpretation
+- the overall confidence level based on pseudobulk availability, DA support, cell-level-only limitations, and cross-layer agreement
+
+Phase 7 reports should not:
+
+- repeat every prior report in miniature
+- stay organized contrast-by-contrast from start to finish
+- devolve into a changelog of all clusters
+- treat the project as a collection of unrelated results trees
+- overstate weak or cell-level-only findings as definitive biology
+
+Instead, phase 7 should read like the final biological memo for the dataset:
+
+- synthesis-centered
+- concise
+- organized by biological story rather than by pipeline phase
+- explicit about predictive versus mechanistic interpretations when relevant
+- explicit about what is robust versus provisional
+
+Recommended data inputs for phase 7:
+
+- phase 3 overview outputs and any active label-hierarchy layers
+- the relevant phase 4 DE overview reports across layers and contrasts
+- the relevant phase 5 DE reports for the key driver populations
+- the relevant phase 6 synthesis reports across contrasts
+- matching DE and DA settings files and summary tables
+- selected underlying DE and DA tables for spot checks
+- the final merged annotation object and associated figures
+- direct `adata` queries when needed for supporting counts, prevalence, or layer mapping
+
+Cross-contrast synthesis rules:
+
+- Always ask which findings recur across multiple contrasts and which are contrast-specific.
+- Distinguish predictive baseline findings from post-intervention or longitudinal mechanistic findings.
+- If the same broad compartment recurs across multiple contrasts, identify whether the same fine populations are responsible each time.
+- If a signal appears in one contrast but not another, say that explicitly and interpret why that matters biologically.
+- Summarize null or weak findings when they materially narrow the interpretation.
+
+Phase 7 process-panel rule:
+
+- If the integrated project-level story suggests one or more coherent processes such as inflammation, metabolic reprogramming, bile-acid handling, endothelial specialization, scavenging identity, fibrosis, stress, or remodeling, create at least one targeted custom panel for each process that is central to the final narrative.
+- Prefer genes that are both biologically central to the inferred process and supported somewhere in the DE signal when possible.
+- If the strongest process genes are not all among the top DE hits, it is acceptable to supplement with canonical process genes.
+- Use the `scomnom` plotting API to generate project-level panels when possible.
+- Prefer targeted plots that clarify the final synthesis, for example:
+  - layer-aware dotplots across the main driver populations
+  - contrast-split violins for the key synthesis genes
+  - UMAPs showing the main project-level process genes
+
+Recommended section order for phase 7 synthesis reports:
+
+- `Phase 7 Biological Synthesis`
+- `Scope`
+- `Study Design`
+- `Final Atlas Context`
+- `Global Biological Findings`
+- `Predictive Signals`
+- `Mechanistic And Longitudinal Signals`
+- `Differential Expression And Abundance Integration`
+- `Cross-Layer Resolution`
+- `Process Panels`
+- `Integrated Interpretation`
+- `Confidence And Limitations`
+- `Final Takeaway`
+
+Content expectations for each phase 7 section:
+
+- `Scope`:
+  State the active context and that this is the final project-level biological synthesis.
+
+- `Study Design`:
+  Explain what the main contrasts mean biologically, especially which ones are predictive and which ones are mechanistic.
+
+- `Final Atlas Context`:
+  Summarize the final atlas organization from phase 3 so the biological findings are anchored in the final annotation hierarchy.
+
+- `Global Biological Findings`:
+  Summarize the strongest recurring biology in the dataset as a whole.
+
+- `Predictive Signals`:
+  Summarize the main baseline findings that may foreshadow later outcomes when the study design supports that interpretation.
+
+- `Mechanistic And Longitudinal Signals`:
+  Summarize the main post-intervention or over-time biology and explain how it differs from the predictive baseline story.
+
+- `Differential Expression And Abundance Integration`:
+  State whether the project-level story is mainly state change, abundance change, or both.
+  Be explicit about DA-null interpretations when relevant.
+
+- `Cross-Layer Resolution`:
+  Explain which broad signals refine into specific driver populations and which broad signals weaken after splitting.
+
+- `Process Panels`:
+  Describe the targeted custom panels used to support the final integrated story, why those genes were chosen, and what they show.
+
+- `Integrated Interpretation`:
+  Provide the main biological narrative for the project in one coherent synthesis paragraph or short set of paragraphs.
+
+- `Confidence And Limitations`:
+  State the main strengths and weaknesses of the evidence base, including pseudobulk availability, DA support, and cell-level-only limitations.
+
+- `Final Takeaway`:
+  End with a concise statement of what the dataset most likely says biologically overall.
+
+Rules for phase 7 writing style:
+
+- Write phase 7 as the final biological memo for the project, not as a recap of every prior phase.
+- Prefer biological synthesis over report inventory.
+- Be explicit about predictive versus mechanistic framing when relevant to the study design.
+- Be explicit about whether the project-level story is dominated by state change, abundance change, or both.
+- Keep the report concise relative to the total volume of underlying phase 3 to phase 6 material.
+
+Rules for phase 7 HTML output:
+
+- Use the same clean single-page design language as the phase 3 through phase 6 reports so outputs look consistent across projects.
+- Use bordered sections, inline galleries, and local copied assets only.
+- Copy every figure used by the HTML into `de_phase7_master_synthesis_assets/`.
+
+Rules for phase 7 TXT output:
+
+- Preserve the same section order and synthesis logic as the HTML report.
+- Keep the prose readable without links or HTML.
+- Refer to process panels clearly in text so the reasoning remains understandable even without the figures.
 
 For doublet QC in phase 1 overview reports:
 

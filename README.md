@@ -1,6 +1,6 @@
 # scomnom-anno-bot
 
-Version: `0.4.0`
+Version: `0.5.0`
 
 `scomnom-anno-bot` is a portable annotation workflow for reviewing `scOmnom` analysis outputs with an agentic LLM.
 
@@ -12,6 +12,7 @@ It is designed to help with:
 - phase 4 atlas-level DE overview for one selected contrast
 - phase 5 cluster-level DE deep dive for one selected contrast and cluster
 - phase 6 cross-layer DE synthesis overview for one selected contrast
+- phase 7 final project-level biological synthesis across all major contrasts
 - evidence-driven cell type naming based on markers, specificity, pathways, and literature
 - structured annotation and DE note generation in HTML and TXT formats
 - targeted 9-gene validation panel design and plotting through `scomnom`
@@ -26,7 +27,7 @@ It is designed to help with:
 `scomnom-anno-bot` provides:
 
 - a portable `AGENTS.md` with startup checks, annotation workflow rules, report conventions, and panel-plotting workflow
-- portable report templates for phase 1, phase 3, phase 4, phase 5, and phase 6 style outputs
+- portable report templates for phase 1, phase 3, phase 4, phase 5, phase 6, and phase 7 style outputs
 - a starter template for `project-local.md`
 - a structured command vocabulary for common annotation tasks
 
@@ -275,6 +276,23 @@ Expected behavior:
 - generate targeted custom process panels when the integrated signal supports a coherent biology
 - write a structured synthesis report into `annotation/phase6/`
 
+### 10. Write the final project-level biological synthesis
+
+Example:
+
+```text
+Generate phase 7 biological synthesis
+```
+
+Expected behavior:
+
+- use the final phase 3 atlas overview as the annotation backbone
+- integrate the key phase 4, phase 5, and phase 6 conclusions across the major contrasts
+- distinguish predictive baseline findings from mechanistic post-intervention and longitudinal findings when relevant
+- summarize whether the dataset is dominated by state change, abundance change, or both
+- generate targeted final process panels when needed to support the dataset-level biological story
+- write a structured final synthesis report into `annotation/phase7/`
+
 ## Commands
 
 These are the main command-style phrases `scomnom-anno-bot` is designed to understand.
@@ -317,6 +335,8 @@ Examples:
 - `Perform phase 5 DE reports on Cnn, ..., Ckk`
 - `Generate phase 6 DE synthesis`
 - `Perform phase 6 DE overview`
+- `Generate phase 7 biological synthesis`
+- `Perform phase 7 overview`
 
 These requests should trigger the overview workflow rather than a deep-dive cluster memo.
 
@@ -331,12 +351,14 @@ For the DE phases:
 - phase 4 is an atlas-level DE triage memo for one selected contrast
 - phase 5 is a cluster-level DE memo for one selected contrast and cluster
 - phase 6 is a final contrast-level DE synthesis memo that integrates phase 4 and phase 5 across available annotation layers
+- phase 7 is the final project-level biological memo that integrates annotation, DE, DA, and cross-contrast interpretation
 - DE reports should use `scOmnom` contrast-key semantics:
   - `A:B` builds a composite key, usually resolved internally as `A.B`
   - `A@B` means compare `A` within levels of `B`
   - `A^B` means interaction
 - when both `cell_based/` and `pseudobulk_DE/` exist, pseudobulk should be weighted more heavily for inferential confidence
 - phase 6 should explicitly connect broad layers and fine layers when both are available
+- phase 7 should synthesize the full project around the main biological stories rather than reviewing one contrast at a time
 
 ## Output Conventions
 
@@ -347,6 +369,7 @@ For the DE phases:
 - phase 4 DE overview reports in `annotation/phase4/` as `.html`, `.txt`, and `de_phase4_<run_id>_assets/`
 - phase 5 DE reports in `annotation/phase5/` as `.html`, `.txt`, `.md`, and `de_phase5_<run_id>_<cluster>_assets/`
 - phase 6 DE synthesis reports in `annotation/phase6/` as `.html`, `.txt`, and `de_phase6_<run_id>_assets/`
+- phase 7 project-level synthesis reports in `annotation/phase7/` as `.html`, `.txt`, and `de_phase7_master_synthesis_assets/`
 - deep-dive cluster reports as `.html`, `.txt`, `.md`, and `CXX_assets/`
 - custom panel plots into the active context `panels/` directory
 
@@ -379,6 +402,14 @@ Phase 6 synthesis reports should:
 - explain which fine-grained populations are driving the broad signals
 - generate targeted custom process panels when the integrated signal supports a coherent biology
 
+Phase 7 synthesis reports should:
+
+- use phase 3 as the atlas backbone and phases 4 to 6 as the biological evidence backbone
+- distinguish predictive baseline biology from mechanistic post-intervention or longitudinal biology when relevant
+- summarize the main dataset-level biological stories rather than staying organized one contrast at a time
+- state clearly whether the dominant findings are transcriptional state changes, abundance changes, or both
+- identify what appears robust across contrasts and what remains weak or provisional
+
 ## Templates
 
 Portable templates are included in:
@@ -391,6 +422,8 @@ Portable templates are included in:
 - `templates/report_templates/de_phase5_report_template.txt`
 - `templates/report_templates/de_phase6_synthesis_template.html`
 - `templates/report_templates/de_phase6_synthesis_template.txt`
+- `templates/report_templates/de_phase7_master_synthesis_template.html`
+- `templates/report_templates/de_phase7_master_synthesis_template.txt`
 - `templates/report_templates/phase1_overview_template.html`
 - `templates/report_templates/phase1_overview_template.txt`
 - `templates/report_templates/project-local.example.md`
