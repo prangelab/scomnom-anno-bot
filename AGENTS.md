@@ -276,6 +276,26 @@ Additional phase 3 layer rule:
 - Before generating new UMAPs for an extra layer, first inspect the figure tree for existing outputs, especially `rename_roundN/` folders or similar rename-layer plotting outputs.
 - Only generate fresh categorical UMAPs for extra layers when suitable figures are missing or when the user explicitly asks for regeneration.
 
+Additional phase 3 marker-panel rule:
+
+- Include one ordered marker staircase dotplot for the main final cluster-label layer when the final labels contain explicit marker-gene prefixes.
+- Build that staircase panel from the marker genes embedded in the final cluster names and keep the cluster order identical to the final atlas reporting order.
+- For the main detailed final layer, treat labels in a format such as `C00: MARKER1+ MARKER2+ Label` as gene-parseable and extract the marker-gene tokens from the label text itself.
+- When this detailed staircase panel contains many categories, keep it dotplot-only. Do not add a matching violin grid if it becomes visually illegible.
+- For higher annotation layers beyond the main cluster-label layer, add compact marker panels that make those abstractions readable at a glance.
+- For these higher layers, always add a dotplot.
+- Add a violin grid only when the layer has `6` or fewer categories.
+- For those compact higher-layer violins, use `ncols=2`.
+- Assume that higher abstraction layers beyond the main detailed cluster-label layer will often use custom biological category names rather than gene-based names.
+- If the higher-layer category names are not themselves gene-based and instead represent custom labels such as `Macrophages`, `Immune`, `Structural`, or `Parenchymal`, do not try to extract marker genes from the label text.
+- Instead, choose broad representative markers for each category.
+- When the organ or tissue context is known, choose those higher-layer representative markers in a tissue-aware way using literature-backed or atlas-backed lineage markers appropriate for that organ.
+- For these higher-layer custom labels, aim for two representative markers per category when feasible.
+- Prefer markers that are broad, distinct, and easy to interpret at that abstraction level rather than highly subtype-specific genes.
+- If the top layer is especially broad, such as `Structural` or `Parenchymal`, accept that the chosen marker pair may be approximate and context-dependent.
+- Keep higher-layer marker panels compact and representative. They should clarify the abstraction layer, not recreate the full detailed cluster-level evidence trail.
+- For phase 3 custom dotplots, use the restrained dot-size rule from the general panel workflow rather than the oversized default scaling.
+
 Recommended workflow for phase 3:
 
 1. Identify the correct merged `adata` and merged label key.
@@ -315,8 +335,10 @@ Recommended section order for phase 3 overview reports:
 - `Phase 3 Overview`
 - `Scope`
 - `Global Atlas Structure`
-- `Additional Annotation Layers`
 - `Compartment Summary`
+- `Additional Annotation Layers`
+- `Final Label Marker Staircase`
+- `Layer Marker Panels`
 - `Global QC Context`
 - `Final Population Overview`
 - `Interpretive Notes`
@@ -338,6 +360,18 @@ Content expectations for each phase 3 section:
   State the layer names, the number of labels in each layer, and what level of abstraction they represent.
   If existing rename-layer UMAPs are available, include them here.
   If no extra layers are present, this section can be omitted.
+
+- `Final Label Marker Staircase`:
+  When the detailed final cluster labels include marker-gene prefixes, include one ordered dotplot built from those marker genes.
+  Keep the text short and use the panel mainly as a compact visual checksum of the final naming layer.
+  Do not add a matching violin grid here if the number of detailed categories makes it unreadable.
+
+- `Layer Marker Panels`:
+  For higher annotation layers such as archetypes, compartments, or supercompartments, include compact marker panels that summarize those abstractions.
+  Always include a dotplot.
+  Include a violin grid only when the layer has `6` or fewer categories, with `ncols=2`.
+  When the labels are custom abstractions rather than gene-based names, explain briefly that the markers are broad representative lineage markers chosen for that tissue context.
+  If the organ context is known, use organ-appropriate category markers rather than generic one-size-fits-all markers.
 
 - `Compartment Summary`:
   Group final populations into biologically meaningful compartments.
@@ -1286,6 +1320,9 @@ Preferred plotting workflow:
   - `om.plotting.plot_de_dotplot_top_genes(...)`
   - `om.plotting.plot_de_violin_grid_genes(...)`
   - `om.plotting.plot_de_umap_features_grid(...)`
+- For custom dotplots, do not rely on the oversized default marker scaling.
+- Use a restrained `dot_max` by default so dots remain readable in reports and galleries.
+- As a portable default, start around `dot_max=90` to `dot_max=100` and only increase it when the smaller scale clearly harms legibility.
 - Follow `templates/report_templates/panel_plot_template.py` as the default code skeleton for reusable panel generation.
 - Use `templates/report_templates/panel_gene_list_template.txt` as the default working template for recording proposed genes, replacements, and final accepted panels when helpful.
 
