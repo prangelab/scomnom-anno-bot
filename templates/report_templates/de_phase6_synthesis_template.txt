@@ -2,29 +2,19 @@ Phase 6 DE Synthesis
 
 Scope
 State the active context, the selected contrast, and the annotation layers included in the synthesis.
-Explain the biological meaning of the contrast using the correct `scOmnom` contrast semantics.
+Explain the biological meaning of the contrast and only name the evidence streams that materially matter.
 
-Available Layers And Evidence
-List which phase 4 and phase 5 reports were used, which DE evidence sources are available, and whether pseudobulk support exists anywhere in the synthesis.
+Cross-Layer Signal
+Combine the available-layer summary with the short atlas-level story.
+Say whether the contrast is broad, focal, or weak, which side is more coherent if directional, and what kind of change dominates across layers.
 
-Cross-Layer DE Summary
-Give the short atlas-level story for the contrast.
-State whether the signal is broad, focal, weak, compartment-specific, or mixed.
-
-Compartment-Level Themes
-Summarize the main biological themes by broad compartment.
-Prefer a small number of interpretable themes over exhaustive cluster-by-cluster restatement.
-
-Layer-Resolved Drivers
-Explain which fine-grained populations are driving the broad signals.
-State which broad effects sharpen, disappear, or change after refinement.
-
-Process Panels
-Describe the targeted custom process panels that were generated.
-Explain why those genes were chosen and what the panels show about the inferred biological process.
+Driver Populations And Processes
+Combine the broad compartment themes, finer driver populations, and process evidence into one tight section.
+Explain which fine populations drive the broad signals, which broad effects disappear or sharpen after refinement, and which pathways, regulators, custom panels, or enrichment patterns make that story concrete.
 
 Integrated Interpretation
 Turn the broad-to-fine signal into one coherent biological interpretation for the contrast.
+Translate direction into biology and say what kind of change the contrast represents.
 
 Confidence And Caveats
 State whether the synthesis is pseudobulk-backed, cell-level-only, concordant across layers, or still provisional.

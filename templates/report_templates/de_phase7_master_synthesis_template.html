@@ -12,67 +12,24 @@
       --muted: #5b5b5b;
       --border: #d9d3c7;
     }
-    body {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-    }
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 32px 24px 48px;
-    }
-    section {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 20px 24px;
-      margin: 0 0 20px;
-    }
-    h1, h2 {
-      margin-top: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.15;
-    }
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.25rem;
-    }
-    h2 {
-      font-size: 1.2rem;
-      margin-bottom: 0.75rem;
-    }
-    p, li {
-      font-size: 1rem;
-    }
-    .muted {
-      color: var(--muted);
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
-    figure {
-      margin: 0;
-      border: 1px solid var(--border);
-      background: #faf7f0;
-      padding: 10px;
-    }
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid var(--border);
-      background: white;
-    }
-    figcaption {
-      margin-top: 8px;
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
+    body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    main { max-width: 1120px; margin: 0 auto; padding: 32px 24px 48px; }
+    section { background: var(--panel); border: 1px solid var(--border); padding: 20px 24px; margin: 0 0 20px; }
+    h1, h2 { margin-top: 0; font-family: Arial, Helvetica, sans-serif; line-height: 1.15; }
+    h1 { font-size: 2.2rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    p, li { font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+    figure { margin: 0; border: 1px solid var(--border); background: #faf7f0; padding: 10px; }
+    img { display: block; width: 100%; height: auto; border: 1px solid var(--border); background: white; }
+    figcaption { margin-top: 8px; font-size: 0.92rem; color: var(--muted); }
+    .thumb { cursor: zoom-in; }
+    .lightbox { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(20, 20, 20, 0.88); padding: 28px; z-index: 9999; }
+    .lightbox.open { display: flex; }
+    .lightbox-inner { position: relative; max-width: min(94vw, 1500px); max-height: 92vh; }
+    .lightbox img { display: block; max-width: 100%; max-height: 92vh; width: auto; height: auto; border: 2px solid #e8e1d4; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35); background: white; }
+    .lightbox-close { position: absolute; top: -14px; right: -14px; width: 36px; height: 36px; border: 1px solid #d9d3c7; border-radius: 999px; background: #fffdf8; color: #1f1f1f; font: inherit; font-size: 1.2rem; line-height: 1; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -83,24 +40,59 @@
     </section>
 
     <section><h2>Scope</h2><p>{{scope}}</p></section>
-    <section><h2>Study Design</h2><p>{{study_design}}</p></section>
-    <section><h2>Final Atlas Context</h2><p>{{final_atlas_context}}</p></section>
-    <section><h2>Global Biological Findings</h2><p>{{global_biological_findings}}</p></section>
-    <section><h2>Predictive Signals</h2><p>{{predictive_signals}}</p></section>
-    <section><h2>Mechanistic And Longitudinal Signals</h2><p>{{mechanistic_and_longitudinal_signals}}</p></section>
-    <section><h2>Differential Expression And Abundance Integration</h2><p>{{de_and_da_integration}}</p></section>
-    <section><h2>Cross-Layer Resolution</h2><p>{{cross_layer_resolution}}</p></section>
-    <section><h2>Process Panels</h2><p>{{process_panels}}</p></section>
+    <section><h2>Study Design And Atlas Context</h2><p>{{study_design_and_atlas_context}}</p></section>
+    <section><h2>Core Findings</h2><p>{{core_findings}}</p></section>
+    <section>
+      <h2>Cross-Contrast And Cross-Layer Resolution</h2>
+      <p>{{cross_contrast_and_cross_layer_resolution}}</p>
+      <div class="gallery">
+        {{cross_layer_figure_gallery}}
+      </div>
+    </section>
+    <section>
+      <h2>Process Evidence</h2>
+      <p>{{process_evidence}}</p>
+      <div class="gallery">
+        {{process_figure_gallery}}
+      </div>
+    </section>
     <section><h2>Integrated Interpretation</h2><p>{{integrated_interpretation}}</p></section>
     <section><h2>Confidence And Limitations</h2><p>{{confidence_and_limitations}}</p></section>
     <section><h2>Final Takeaway</h2><p>{{final_takeaway}}</p></section>
-
-    <section>
-      <h2>Figures</h2>
-      <div class="gallery">
-        {{figure_gallery}}
-      </div>
-    </section>
   </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">x</button>
+      <img id="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const closeButton = document.getElementById("lightbox-close");
+    document.querySelectorAll(".thumb").forEach((img) => {
+      img.addEventListener("click", () => {
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+      });
+    });
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImage.src = "";
+      lightboxImage.alt = "";
+    }
+    closeButton.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeLightbox();
+    });
+  </script>
 </body>
 </html>

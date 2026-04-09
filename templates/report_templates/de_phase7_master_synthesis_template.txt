@@ -3,29 +3,17 @@ Phase 7 Biological Synthesis
 Scope
 {{scope}}
 
-Study Design
-{{study_design}}
+Study Design And Atlas Context
+{{study_design_and_atlas_context}}
 
-Final Atlas Context
-{{final_atlas_context}}
+Core Findings
+{{core_findings}}
 
-Global Biological Findings
-{{global_biological_findings}}
+Cross-Contrast And Cross-Layer Resolution
+{{cross_contrast_and_cross_layer_resolution}}
 
-Predictive Signals
-{{predictive_signals}}
-
-Mechanistic And Longitudinal Signals
-{{mechanistic_and_longitudinal_signals}}
-
-Differential Expression And Abundance Integration
-{{de_and_da_integration}}
-
-Cross-Layer Resolution
-{{cross_layer_resolution}}
-
-Process Panels
-{{process_panels}}
+Process Evidence
+{{process_evidence}}
 
 Integrated Interpretation
 {{integrated_interpretation}}

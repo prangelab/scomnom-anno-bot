@@ -2,32 +2,23 @@ Phase 4 DE Overview
 
 Scope
 State the active context, annotation layer, DE round, contrast key, and selected contrast.
-Explain the biological meaning of the contrast, including whether it is a simple factor, a composite condition, a within-group contrast, or an interaction.
+Explain the biological meaning of the contrast and fold in only the run settings that materially affect interpretation.
 
-Run Settings
-Summarize the DE settings that materially affect interpretation, including engine, available evidence sources, explicit contrasts, minimum thresholds, and whether pseudobulk was run.
-
-Atlas-Level DE Summary
+Atlas-Level Signal
 Summarize how strong and how distributed the signal appears across the atlas.
-State whether the contrast looks focal, diffuse, weak, or compartment-specific.
+State which side is more coherent when the contrast is directional and what kind of biological change that side seems to represent.
+Interpret the key figures directly rather than describing them in generic terms.
 
-Coverage And Skip Summary
-Summarize which clusters were tested successfully, skipped, or limited by low counts or low replicate support.
-Be explicit about why clusters were skipped.
+Key Drivers And Limits
+Combine the strongest responding clusters, any meaningful DA context, and the main limitations into one compact section.
+Say which clusters really drive the biology, which side is higher there, and what kind of change that side represents.
 
-Strongest Responding Clusters
-Highlight only the clusters with the most interpretable signal.
-Prefer clusters with coherent biology and replicate-aware support when pseudobulk is available.
-
-Weak Or Ambiguous Clusters
-Summarize clusters that look underpowered, inflation-prone, discordant across sources, or otherwise not yet convincing.
-
-Pathway And Regulator Overview
-Summarize broad pathway and regulator shifts across the atlas.
-Explain how DoRothEA, MSigDB, and PROGENy agree with or complicate the gene-level story.
+Pathway, Regulator, And Enrichment Evidence
+Summarize only the pathway, regulator, and enrichment evidence that materially sharpens the interpretation.
+Name concrete pathways, regulators, or condition-specific enrichment patterns and explain how they support the story.
 
 Priority Shortlist For Phase 5
-List the best next DE deep-dive targets and explain why each one is worth a cluster-level report.
+List only the clusters that truly deserve a phase 5 deep dive and explain briefly why.
 
 Practical Takeaway
-End with a short paragraph stating whether the contrast produced a useful atlas-level story and where the most trustworthy DE signal sits.
+End with a short paragraph stating whether the contrast produced a useful atlas-level biological story, which side is most interpretable if the contrast is directional, and where the trustworthy signal sits.

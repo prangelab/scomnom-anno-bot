@@ -10,118 +10,27 @@
       --panel: #fffdf8;
       --text: #1f1f1f;
       --muted: #5b5b5b;
-      --accent: #1e5a7a;
       --border: #d9d3c7;
     }
-    body {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-    }
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 32px 24px 48px;
-    }
-    section {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 20px 24px;
-      margin: 0 0 20px;
-    }
-    h1, h2 {
-      margin-top: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.15;
-    }
+    body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    main { max-width: 1120px; margin: 0 auto; padding: 32px 24px 48px; }
+    section { background: var(--panel); border: 1px solid var(--border); padding: 20px 24px; margin: 0 0 20px; }
+    h1, h2 { margin-top: 0; font-family: Arial, Helvetica, sans-serif; line-height: 1.15; }
     h1 { font-size: 2.2rem; margin-bottom: 0.25rem; }
     h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
     p, li, td, th { font-size: 1rem; }
     .muted { color: var(--muted); }
-    code, pre {
-      font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 0.95rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-    }
-    th, td {
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      vertical-align: top;
-      text-align: left;
-    }
-    th { background: #f0ece2; font-family: Arial, Helvetica, sans-serif; }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
-    figure {
-      margin: 0;
-      border: 1px solid var(--border);
-      background: #faf7f0;
-      padding: 10px;
-    }
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid var(--border);
-      background: white;
-    }
-    figcaption {
-      margin-top: 8px;
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
+    code, pre { font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 0.95rem; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+    figure { margin: 0; border: 1px solid var(--border); background: #faf7f0; padding: 10px; }
+    img { display: block; width: 100%; height: auto; border: 1px solid var(--border); background: white; }
+    figcaption { margin-top: 8px; font-size: 0.92rem; color: var(--muted); }
     .thumb { cursor: zoom-in; }
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(20, 20, 20, 0.88);
-      padding: 28px;
-      z-index: 9999;
-    }
+    .lightbox { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(20, 20, 20, 0.88); padding: 28px; z-index: 9999; }
     .lightbox.open { display: flex; }
-    .lightbox-inner {
-      position: relative;
-      max-width: min(94vw, 1500px);
-      max-height: 92vh;
-    }
-    .lightbox img {
-      display: block;
-      max-width: 100%;
-      max-height: 92vh;
-      width: auto;
-      height: auto;
-      border: 2px solid #e8e1d4;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-      background: white;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: -14px;
-      right: -14px;
-      width: 36px;
-      height: 36px;
-      border: 1px solid #d9d3c7;
-      border-radius: 999px;
-      background: #fffdf8;
-      color: #1f1f1f;
-      font: inherit;
-      font-size: 1.2rem;
-      line-height: 1;
-      cursor: pointer;
-    }
+    .lightbox-inner { position: relative; max-width: min(94vw, 1500px); max-height: 92vh; }
+    .lightbox img { display: block; max-width: 100%; max-height: 92vh; width: auto; height: auto; border: 2px solid #e8e1d4; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35); background: white; }
+    .lightbox-close { position: absolute; top: -14px; right: -14px; width: 36px; height: 36px; border: 1px solid #d9d3c7; border-radius: 999px; background: #fffdf8; color: #1f1f1f; font: inherit; font-size: 1.2rem; line-height: 1; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -134,53 +43,14 @@
     <section>
       <h2>Scope</h2>
       <p>
-        State the active context, the selected contrast, and the annotation layers included in the synthesis. Explain the biological meaning of the contrast using the correct <code>scOmnom</code> contrast semantics.
+        State the active context, the selected contrast, and the annotation layers included in the synthesis. Explain the biological meaning of the contrast and only name the evidence streams that actually matter for the synthesis.
       </p>
     </section>
 
     <section>
-      <h2>Available Layers And Evidence</h2>
+      <h2>Cross-Layer Signal</h2>
       <p>
-        List which phase 4 and phase 5 reports were used, which DE evidence sources are available, and whether pseudobulk support exists anywhere in the synthesis.
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Layer</th>
-            <th>Phase 4 Status</th>
-            <th>Phase 5 Coverage</th>
-            <th>Evidence Sources</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>r5_archetypes</code></td>
-            <td>Available</td>
-            <td>Priority clusters reviewed</td>
-            <td>Cell-level only or both cell-level and pseudobulk</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section>
-      <h2>Cross-Layer DE Summary</h2>
-      <p>
-        Give the short atlas-level story for the contrast and say whether the signal is broad, focal, weak, compartment-specific, or mixed.
-      </p>
-    </section>
-
-    <section>
-      <h2>Compartment-Level Themes</h2>
-      <p>
-        Summarize the main biological themes by broad compartment. Prefer a small number of interpretable themes over exhaustive cluster-by-cluster restatement.
-      </p>
-    </section>
-
-    <section>
-      <h2>Layer-Resolved Drivers</h2>
-      <p>
-        Explain which fine-grained populations are driving the broad signals and which broad effects sharpen, disappear, or change after refinement.
+        Combine the available-layer summary with the short atlas-level story. Say which layers were synthesized, whether pseudobulk support exists anywhere, which side is more coherent if the contrast is directional, and what kind of change dominates across layers.
       </p>
       <div class="gallery">
         <figure>
@@ -195,9 +65,9 @@
     </section>
 
     <section>
-      <h2>Process Panels</h2>
+      <h2>Driver Populations And Processes</h2>
       <p>
-        Describe the targeted custom process panels that were generated, why those genes were chosen, and what they show about the inferred biological process.
+        Combine the broad compartment themes, finer driver populations, and process evidence into one tight section. Explain which fine populations drive the broad signals, which broad effects disappear or sharpen after refinement, and which pathways, regulators, custom panels, or enrichment patterns make that story concrete.
       </p>
       <div class="gallery">
         <figure>
@@ -218,7 +88,7 @@
     <section>
       <h2>Integrated Interpretation</h2>
       <p>
-        Turn the broad-to-fine signal into one coherent biological interpretation for the contrast.
+        Turn the broad-to-fine signal into one coherent biological interpretation for the contrast. Translate direction into biology and say what kind of change the contrast represents.
       </p>
     </section>
 
@@ -239,7 +109,7 @@
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox-inner">
-      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">&times;</button>
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">x</button>
       <img id="lightbox-image" src="" alt="">
     </div>
   </div>
@@ -248,7 +118,7 @@
     const lightbox = document.getElementById("lightbox");
     const lightboxImage = document.getElementById("lightbox-image");
     const closeButton = document.getElementById("lightbox-close");
-    document.querySelectorAll(".thumb").forEach(img => {
+    document.querySelectorAll(".thumb").forEach((img) => {
       img.addEventListener("click", () => {
         lightboxImage.src = img.src;
         lightboxImage.alt = img.alt;
@@ -260,17 +130,14 @@
       lightbox.classList.remove("open");
       lightbox.setAttribute("aria-hidden", "true");
       lightboxImage.src = "";
+      lightboxImage.alt = "";
     }
     closeButton.addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
-      }
+      if (event.target === lightbox) closeLightbox();
     });
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closeLightbox();
-      }
+      if (event.key === "Escape") closeLightbox();
     });
   </script>
 </body>

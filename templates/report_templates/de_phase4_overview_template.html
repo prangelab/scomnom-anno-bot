@@ -10,145 +10,50 @@
       --panel: #fffdf8;
       --text: #1f1f1f;
       --muted: #5b5b5b;
-      --accent: #1e5a7a;
       --border: #d9d3c7;
     }
-    body {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-    }
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 32px 24px 48px;
-    }
-    section {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 20px 24px;
-      margin: 0 0 20px;
-    }
-    h1, h2 {
-      margin-top: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.15;
-    }
+    body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    main { max-width: 1120px; margin: 0 auto; padding: 32px 24px 48px; }
+    section { background: var(--panel); border: 1px solid var(--border); padding: 20px 24px; margin: 0 0 20px; }
+    h1, h2 { margin-top: 0; font-family: Arial, Helvetica, sans-serif; line-height: 1.15; }
     h1 { font-size: 2.2rem; margin-bottom: 0.25rem; }
     h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
     p, li, td, th { font-size: 1rem; }
     .muted { color: var(--muted); }
-    code, pre {
-      font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 0.95rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-    }
-    th, td {
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      vertical-align: top;
-      text-align: left;
-    }
+    code, pre { font-family: Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid var(--border); padding: 10px 12px; vertical-align: top; text-align: left; }
     th { background: #f0ece2; font-family: Arial, Helvetica, sans-serif; }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
-    figure {
-      margin: 0;
-      border: 1px solid var(--border);
-      background: #faf7f0;
-      padding: 10px;
-    }
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid var(--border);
-      background: white;
-    }
-    figcaption {
-      margin-top: 8px;
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+    figure { margin: 0; border: 1px solid var(--border); background: #faf7f0; padding: 10px; }
+    img { display: block; width: 100%; height: auto; border: 1px solid var(--border); background: white; }
+    figcaption { margin-top: 8px; font-size: 0.92rem; color: var(--muted); }
     .thumb { cursor: zoom-in; }
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(20, 20, 20, 0.88);
-      padding: 28px;
-      z-index: 9999;
-    }
+    .lightbox { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(20, 20, 20, 0.88); padding: 28px; z-index: 9999; }
     .lightbox.open { display: flex; }
-    .lightbox-inner {
-      position: relative;
-      max-width: min(94vw, 1500px);
-      max-height: 92vh;
-    }
-    .lightbox img {
-      display: block;
-      max-width: 100%;
-      max-height: 92vh;
-      width: auto;
-      height: auto;
-      border: 2px solid #e8e1d4;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-      background: white;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: -14px;
-      right: -14px;
-      width: 36px;
-      height: 36px;
-      border: 1px solid #d9d3c7;
-      border-radius: 999px;
-      background: #fffdf8;
-      color: #1f1f1f;
-      font: inherit;
-      font-size: 1.2rem;
-      line-height: 1;
-      cursor: pointer;
-    }
+    .lightbox-inner { position: relative; max-width: min(94vw, 1500px); max-height: 92vh; }
+    .lightbox img { display: block; max-width: 100%; max-height: 92vh; width: auto; height: auto; border: 2px solid #e8e1d4; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35); background: white; }
+    .lightbox-close { position: absolute; top: -14px; right: -14px; width: 36px; height: 36px; border: 1px solid #d9d3c7; border-radius: 999px; background: #fffdf8; color: #1f1f1f; font: inherit; font-size: 1.2rem; line-height: 1; cursor: pointer; }
   </style>
 </head>
 <body>
   <main>
     <section>
       <h1>Phase 4 DE Overview</h1>
-      <p class="muted">Atlas-level contrast summary template</p>
+      <p class="muted">Atlas-level contrast triage template</p>
     </section>
 
     <section>
       <h2>Scope</h2>
       <p>
-        State the active context, annotation layer, DE round, contrast key, and selected contrast. Explain the biological meaning of the contrast and whether this run uses a simple factor, a composite condition, a within-group contrast, or an interaction.
+        State the active context, annotation layer, DE round, contrast key, and selected contrast. Explain the biological meaning of the contrast and fold in only the run settings that materially affect interpretation, such as whether pseudobulk exists, whether cell-level DE is the only source, and any special restrictions or thresholds.
       </p>
     </section>
 
     <section>
-      <h2>Run Settings</h2>
+      <h2>Atlas-Level Signal</h2>
       <p>
-        Summarize the DE settings that materially affect interpretation, including engine, available evidence sources, explicit contrasts, minimum count thresholds, and whether pseudobulk was run.
-      </p>
-    </section>
-
-    <section>
-      <h2>Atlas-Level DE Summary</h2>
-      <p>
-        Give a concise summary of how strong and how distributed the signal appears across the atlas. State whether the contrast looks focal, diffuse, weak, or compartment-specific.
+        Give the broad atlas-level readout in one tight paragraph. Say whether the contrast is broad, focal, or weak; which side is more coherent when the contrast is directional; and what kind of biological change that direction seems to represent. Interpret the figures directly rather than calling them strong in generic terms.
       </p>
       <div class="gallery">
         <figure>
@@ -156,52 +61,41 @@
           <figcaption>Condition or contrast UMAP placeholder.</figcaption>
         </figure>
         <figure>
-          <img class="thumb" src="TEMPLATE_assets/de_overview_dotplot.png" alt="DE overview dotplot placeholder">
+          <img class="thumb" src="TEMPLATE_assets/de_overview_dotplot.png" alt="Overview dotplot placeholder">
           <figcaption>Overview dotplot placeholder.</figcaption>
         </figure>
       </div>
     </section>
 
     <section>
-      <h2>Coverage And Skip Summary</h2>
+      <h2>Key Drivers And Limits</h2>
+      <p>
+        Combine the strongest responding clusters, any meaningful DA context, and the main limitations into one compact memo section. Say which clusters really drive the biology, which side is higher in those clusters, what that side appears to be doing, and whether the story is mainly transcriptional, compositional, or both.
+      </p>
       <table>
         <thead>
           <tr>
             <th>Cluster</th>
-            <th>Status</th>
-            <th>Evidence Sources</th>
-            <th>Main Note</th>
+            <th>Why It Matters</th>
+            <th>Higher Side</th>
+            <th>Biological Reading</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>C00</code></td>
-            <td>Tested or skipped</td>
-            <td>Cell-level only, pseudobulk only, or both</td>
-            <td>One short sentence on power, skip reason, or confidence level.</td>
+            <td>Main driver, weak lead, or skipped cluster.</td>
+            <td>State the biological side explicitly.</td>
+            <td>One short sentence on what kind of change it represents.</td>
           </tr>
         </tbody>
       </table>
     </section>
 
     <section>
-      <h2>Strongest Responding Clusters</h2>
+      <h2>Pathway, Regulator, And Enrichment Evidence</h2>
       <p>
-        Highlight only the clusters with the most interpretable signal. Prefer those with coherent biology and replicate-aware support when pseudobulk is available.
-      </p>
-    </section>
-
-    <section>
-      <h2>Weak Or Ambiguous Clusters</h2>
-      <p>
-        Summarize clusters that look underpowered, inflation-prone, discordant across sources, or otherwise not yet convincing.
-      </p>
-    </section>
-
-    <section>
-      <h2>Pathway And Regulator Overview</h2>
-      <p>
-        Summarize broad pathway and regulator shifts across the atlas. Explain how DoRothEA, MSigDB, and PROGENy agree with or complicate the gene-level story.
+        Summarize only the pathway or regulator evidence that materially sharpens the interpretation. Name concrete pathways, regulators, or enrichment patterns and explain whether they agree with the gene-level story. If condition-specific enrichment exists, state what it adds beyond standard cluster enrichment and DE-derived enrichment.
       </p>
       <div class="gallery">
         <figure>
@@ -221,17 +115,15 @@
 
     <section>
       <h2>Priority Shortlist For Phase 5</h2>
-      <ul>
-        <li>Name the first cluster that deserves a DE deep dive and why.</li>
-        <li>Name the second cluster if warranted.</li>
-        <li>Note any cluster that looks tempting but is still too weak or too underpowered.</li>
-      </ul>
+      <p>
+        Name only the clusters that truly deserve a phase 5 deep dive and explain briefly why each one is worth the extra effort.
+      </p>
     </section>
 
     <section>
       <h2>Practical Takeaway</h2>
       <p>
-        End with a short paragraph stating whether the contrast produced a useful atlas-level story and where the most trustworthy DE signal sits.
+        End with a short paragraph stating whether the contrast produced a useful atlas-level biological story, which side is most interpretable if the contrast is directional, and where the most trustworthy signal sits.
       </p>
     </section>
   </main>
@@ -249,25 +141,21 @@
       const lightboxImage = document.getElementById("lightbox-image");
       const closeButton = document.getElementById("lightbox-close");
       const thumbs = document.querySelectorAll(".thumb");
-
       function openLightbox(src, alt) {
         lightboxImage.src = src;
         lightboxImage.alt = alt || "";
         lightbox.classList.add("open");
         lightbox.setAttribute("aria-hidden", "false");
       }
-
       function closeLightbox() {
         lightbox.classList.remove("open");
         lightbox.setAttribute("aria-hidden", "true");
         lightboxImage.src = "";
         lightboxImage.alt = "";
       }
-
       thumbs.forEach((img) => {
         img.addEventListener("click", () => openLightbox(img.src, img.alt));
       });
-
       closeButton.addEventListener("click", closeLightbox);
       lightbox.addEventListener("click", (event) => {
         if (event.target === lightbox) closeLightbox();
