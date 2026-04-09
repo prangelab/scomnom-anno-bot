@@ -574,6 +574,7 @@ Content expectations for each phase 4 section:
   For directional contrasts, also summarize which side is broadly higher and what that implies biologically.
   For interaction contrasts, explain what positive and negative interaction signs mean rather than leaving the interaction direction implicit.
   Do not stop at the presence of an effect alone; also say what functional program or biological theme is carried by each meaningful side of the contrast.
+  Explicitly describe the nature of the change, for example preserved identity, inflammatory activation, metabolic remodeling, stress, secretory shift, or loss of specialization, rather than merely saying that signal is present.
 
 - `Coverage And Skip Summary`:
   Summarize which clusters were tested successfully, skipped, or limited by low counts or low replicate support.
@@ -588,7 +589,7 @@ Content expectations for each phase 4 section:
   Highlight only the most compelling clusters.
   Prefer clusters that have coherent biology and, when available, pseudobulk support.
   When possible, say not only that a cluster responds, but also which side of the contrast is higher in that cluster.
-  When possible, also say what the higher side appears to be doing biologically in that cluster.
+  When possible, also say what the higher side appears to be doing biologically in that cluster and what kind of biological change that represents.
 
 - `Weak Or Ambiguous Clusters`:
   Highlight clusters where signal is weak, inflated-looking, discordant between sources, or too underpowered for confidence.
@@ -612,6 +613,7 @@ Rules for phase 4 writing style:
 - When DA is available, explain clearly whether the contrast is mainly a state-change story, an abundance-change story, or a combination of both.
 - If DA is available but non-significant, say that explicitly rather than leaving the reader to infer it.
 - For all directional contrasts, always move from sign to biology: say which side is higher and what that side seems to represent functionally.
+- Across all contrasts, do not just report that a signal exists; explain the nature of the change in biological terms.
 - For interaction contrasts, do not leave the reader with positive-versus-negative coefficients alone; explain what each sign means biologically and which sign carries the more coherent program.
 
 Rules for phase 4 HTML output:
@@ -712,9 +714,10 @@ Content expectations for each phase 5 section:
   Use the real biological sides explicitly, for example `female higher` and `male higher`, rather than unlabeled `A higher` and `B higher`.
 
 - `Directionality`:
-  Required for directional contrasts from phase 5 onward.
+  Required from phase 5 onward.
   State clearly what positive and negative effect sizes mean for the selected contrast.
-  For all directional contrasts, identify which side carries the clearer biological program and what that program appears to be.
+  For all contrasts, identify which side or sign carries the clearer biological program and what that program appears to be.
+  Do not stop at saying that one side is higher; state what kind of biological change that side reflects.
   For sex-related contrasts, identify which leading autosomal genes sit on each side so the reader can tell not only that a residual autosomal program exists, but also which side carries it.
   For interaction contrasts, explain what the positive and negative sides imply about how the female-versus-male difference changes across disease strata.
 
@@ -751,6 +754,7 @@ Content expectations for each phase 5 section:
 - `Interpretation`:
   Provide a short integrative paragraph that explains what the cluster seems to be doing biologically in this contrast.
   Make the directional biology explicit rather than leaving the sign abstract.
+  State the nature of the change, not just that the cluster is different.
 
 - `Caveats Or Next-Step Notes`:
   Use when the signal is weak, technically suspect, or would benefit from targeted follow-up.
@@ -764,6 +768,7 @@ Rules for phase 5 writing style:
 - If the result is weak or provisional, say so plainly.
 - When DA is available, integrate it into the interpretation explicitly.
 - For all directional contrasts, do not stop at saying that one side is higher; also say what functional program that side seems to represent and whether the opposite side carries a meaningful counterprogram.
+- Across all contrasts, describe the nature of the cluster-level change explicitly, for example preserved identity, inflammatory activation, remodeling, stress, dedifferentiation, or secretory shift, rather than only saying that the cluster changes.
 - For sex-related contrasts, do not stop at saying the result is sex-chromosome-driven.
 - For sex-related contrasts, always add an explicit autosomal readout that asks whether any coherent non-sex-chromosome biology remains after the obvious X- and Y-linked hits are set aside.
 - For sex-related contrasts, the autosomal readout should be visible in the figures as well as described in prose.
@@ -913,6 +918,7 @@ Content expectations for each phase 6 section:
 - `Cross-Layer DE Summary`:
   Give the short atlas-level story for the contrast and say whether it is broad, focal, or weak.
   For directional contrasts, also say which side carries the more coherent biology across layers and what that biology seems to be.
+  Also state the nature of the dominant change across layers rather than only its direction.
 
 - `Compartment-Level Themes`:
   Summarize the main biological themes by broad compartment, such as parenchymal, immune, endothelial, biliary, or stromal.
@@ -927,6 +933,7 @@ Content expectations for each phase 6 section:
 - `Integrated Interpretation`:
   Provide a synthesis paragraph that turns the broad-to-fine signal into one coherent biological readout for the contrast.
   Translate effect direction into biological meaning rather than leaving the synthesis at the level of statistical sign alone.
+  Explain what kind of change the contrast represents biologically.
 
 - `Confidence And Caveats`:
   State whether the synthesis is supported by pseudobulk, by cell-level-only evidence, by cross-layer agreement, or by targeted panels.
@@ -943,6 +950,7 @@ Rules for phase 6 writing style:
 - Be cautious about process naming unless the gene-level evidence and custom panels support it.
 - Treat pseudobulk-supported conclusions as stronger than cell-level-only conclusions.
 - For directional contrasts, always state which side carries the more coherent residual biology and what that biology appears to be.
+- Across all contrasts, describe the nature of the cross-layer change explicitly rather than only noting that a signal survives refinement.
 - For interaction contrasts, explicitly identify which sign carries the more convincing program and what that implies biologically.
 
 Rules for phase 6 HTML output:
@@ -1052,6 +1060,7 @@ Cross-contrast synthesis rules:
 - If a signal appears in one contrast but not another, say that explicitly and interpret why that matters biologically.
 - Summarize null or weak findings when they materially narrow the interpretation.
 - Across all directional contrasts, say not only that an effect is present, but also which side is biologically more coherent and what that side appears to be doing.
+- Across the project as a whole, do not merely list which contrasts are positive; explain the nature of the major biological changes that recur or diverge across contrasts.
 
 Phase 7 process-panel rule:
 

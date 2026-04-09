@@ -293,6 +293,128 @@ Expected behavior:
 - generate targeted final process panels when needed to support the dataset-level biological story
 - write a structured final synthesis report into `annotation/phase7/`
 
+## DE Workflow By Phase
+
+Phases 4 through 7 are meant to be used together as one DE interpretation ladder.
+
+### Phase 4: Atlas-level DE overview
+
+Use phase 4 when you want the first interpretive pass on one DE run and one contrast.
+
+Phase 4 answers questions like:
+
+- where in the atlas the strongest DE signal sits
+- which clusters are testable, skipped, weak, or noisy
+- whether the signal is broad or localized
+- which clusters deserve phase 5 follow-up
+- whether the contrast looks biologically informative overall
+
+Typical usage:
+
+```text
+Generate phase 4 DE overview for r4_subset_annotation masld_status better_vs_worse
+```
+
+Phase 4 should:
+
+- work contrast-by-contrast
+- use `__summary.csv` or equivalent run-level tables as the main backbone
+- integrate `cell_based/` and `pseudobulk_DE/` when both are available
+- include differential abundance context when DA outputs are available
+- end with a clear shortlist of phase 5 targets
+
+### Phase 5: Cluster-level DE deep dive
+
+Use phase 5 when you want to understand one contrast in one specific population.
+
+Phase 5 answers questions like:
+
+- what genes are changing in this cluster
+- whether those changes are supported by pseudobulk, cell-level, or both
+- what pathways or regulator programs move with the gene-level signal
+- whether the biology looks coherent, weak, technical, or mixed
+- whether the cluster changes in state, abundance, or both
+
+Typical usage:
+
+```text
+Generate phase 5 DE report for C03 in masld_status better_vs_worse
+```
+
+Phase 5 should:
+
+- treat the per-cluster combined DE table as the main backbone
+- weigh pseudobulk more heavily than cell-level significance when both are available
+- use cell-level DE mainly for direction, prevalence, and within-cluster structure
+- include DA context for that cluster when available
+- generate targeted extra plots only when the exported DE outputs are not sufficient
+
+### Phase 6: Contrast-level cross-layer synthesis
+
+Use phase 6 when you want the final readout for one contrast after the key phase 4 and phase 5 work is done.
+
+Phase 6 answers questions like:
+
+- what the main biological story is for this contrast
+- which broad signals persist after refinement into finer subpopulations
+- which specific fine populations drive the broad compartment-level effects
+- whether the contrast is best interpreted as predictive, mechanistic, longitudinal, or some combination
+- which custom process panels best support the integrated biology
+
+Typical usage:
+
+```text
+Generate phase 6 DE synthesis for masld_status better_vs_worse
+```
+
+Phase 6 should:
+
+- synthesize phase 4 and phase 5 rather than replacing them
+- connect broad layers and fine layers explicitly when both are available
+- include DE and DA together in one contrast-level interpretation
+- generate process-focused custom panels when the integrated signal supports a coherent process
+
+### Phase 7: Project-level biological synthesis
+
+Use phase 7 when you want the final whole-dataset biological summary after the annotation and DE layers are already in place.
+
+Phase 7 answers questions like:
+
+- what the main biological findings of the dataset are overall
+- which findings are baseline-predictive versus post-intervention or longitudinal
+- whether the dataset is dominated by transcriptional state change, abundance change, or both
+- which compartments and refined subpopulations are the main biological drivers
+- what appears robust across contrasts versus still provisional
+
+Typical usage:
+
+```text
+Generate phase 7 biological synthesis
+```
+
+Phase 7 should:
+
+- use phase 3 as the atlas backbone
+- use phases 4 to 6 as the biological evidence backbone
+- integrate annotation, DE, DA, and cross-contrast interpretation into one report
+- organize the report around the main biological stories rather than one contrast at a time
+
+### How the phases connect
+
+In normal use, the DE workflow is:
+
+1. Run phase 4 for a selected contrast to find the important responding populations.
+2. Run phase 5 on the shortlisted populations to understand the detailed signal.
+3. Run phase 6 to synthesize that contrast across the available annotation layers.
+4. Run phase 7 once the important contrasts are covered and you want the final biological dataset summary.
+
+In short:
+
+- phase 4 asks where the signal is
+- phase 5 asks what is happening in one population
+- phase 6 asks what that contrast means overall
+- phase 7 asks what the whole dataset means biologically
+
 ## Commands
 
 These are the main command-style phrases `scomnom-anno-bot` is designed to understand.
