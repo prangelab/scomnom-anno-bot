@@ -218,6 +218,37 @@ When running a phase 3 overview:
 - Use the merged main-object `adata` that contains the final merged annotation round, not the earlier pre-merge main-object file unless the user explicitly asks for that older state.
 - Prefer the latest merged annotation object that corresponds to the final integrated labels and clustering visuals.
 - Confirm which merged label key is active, for example a key such as `cluster_label__r4_subset_annotation`.
+
+# Hard evidence rule for DE phases 4 to 7
+
+For all DE-focused later phases (`phase 4`, `phase 5`, `phase 6`, and `phase 7`), always evaluate and integrate all three evidence layers when they are available:
+
+- gene-level DE evidence
+- differential-abundance evidence
+- pathway, regulator, and enrichment evidence
+
+Treat this as a hard requirement, not an optional embellishment.
+
+At minimum, later-phase DE interpretation must explicitly consider:
+
+- the leading DE genes and their directionality
+- DA direction and significance or lack thereof
+- all available DE pathway and regulator outputs, including but not limited to:
+  - MSigDB enrichments, especially Hallmark
+  - DoRothEA
+  - PROGENy
+  - Reactome
+  - other available DE-derived or condition-specific enrichment outputs
+
+Do not write later-phase DE conclusions from marker genes or top DE genes alone when pathway or regulator evidence is available.
+
+If gene-level DE and pathway-level evidence appear to tell different stories, do not ignore the discrepancy. Instead:
+
+- state the discrepancy explicitly
+- explain which evidence stream is cleaner or more coherent
+- adjust the biological conclusion accordingly
+
+When pathway, regulator, or enrichment outputs materially sharpen the biology, they must appear directly in the written interpretation, not just in figures or captions.
 - Use the final merged label names exactly as stored in the merged object or as displayed in the final merged UMAP figures.
 - Do not redo a full evidence-first annotation workflow unless the user explicitly asks for re-evaluation.
 - Treat this as a reporting and atlas-summary task, not as an adjudication task.
