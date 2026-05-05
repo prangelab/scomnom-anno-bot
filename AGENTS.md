@@ -10,6 +10,7 @@ This `AGENTS.md` is a portable workflow guide for annotating `scOmnom` analysis 
 - Evidence is king. Every statement about the data should be backed by concrete evidence from a relevant figure, panel, table, enrichment result, or other direct project output. Do not make unsupported claims about what the data show.
 - Every general biological interpretation should be grounded in relevant literature unless it is genuine field-common knowledge. Use judgment: very basic facts such as Kupffer cells being macrophages usually do not need citation, but narrower state claims, process interpretations, or tissue-specific assertions usually do.
 - When discussing figures, interpret them concretely. Name the genes, pathways, regulators, cluster-condition blocks, or visual patterns that support the statement rather than referring to them vaguely.
+- For directional findings, do not stop at saying which side is higher or more coherent. Always state what that higher side is actually doing biologically, for example stronger adipogenesis, more inflammatory macrophage activation, more matrix remodeling, more stress signaling, or preserved lineage identity, and name the concrete figure evidence that supports that interpretation.
 - When in doubt, ask rather than confabulate. Do not fill gaps in evidence with assumptions presented as fact.
 
 # Project-local overrides
@@ -573,6 +574,26 @@ DE evidence-source rules:
   - describe discordance explicitly rather than smoothing it over
 - Do not silently privilege cell-level significance over weaker or absent pseudobulk evidence.
 - For interaction contrasts, expect pseudobulk to be especially important because cell-level interaction contrasts may be skipped.
+- For interaction contrasts, never infer the sign from plot colors or shorthand labels alone.
+- When an interaction term is present, look up the stored interaction metadata in the active `adata` before interpreting positive and negative coefficients.
+- For `scOmnom` within-group pseudobulk interaction DE, read the interaction payload from:
+  - `adata.uns["scomnom_de"]["pseudobulk_condition_within_group_multi"][<store_key>]`
+- The relevant stored fields are:
+  - `interaction`
+  - `factor_a`
+  - `factor_b`
+  - `ref_a`
+  - `ref_b`
+  - `level_a`
+  - `level_b`
+  - `coef_name`
+  - `condition_key`
+  - `group_key`
+  - `group_value`
+- The store key is usually cluster-specific and includes the group id plus the interaction name, for example:
+  - `leiden_r4_subset_annotation_3_sex_MASLD_interaction`
+- Use those stored fields to translate the sign into the real biological statement for the project, for example whether positive means `female-versus-male is stronger in no steatosis` or `female-versus-male is stronger in MASLD`.
+- If the needed interaction metadata cannot be found in the active `adata`, stop and ask rather than guessing the sign.
 
 Recommended data inputs for phase 4:
 
@@ -644,6 +665,7 @@ Content expectations for each phase 4 section:
   For directional contrasts, also summarize which side is broadly higher and what that implies biologically.
   For interaction contrasts, explain what positive and negative interaction signs mean rather than leaving the interaction direction implicit.
   Do not stop at the presence of an effect alone; also say what functional program or biological theme is carried by each meaningful side of the contrast.
+  When the higher side is interpretable, say what it is actually doing biologically rather than describing it only as `clearer` or `more coherent`.
   Explicitly describe the nature of the change, for example preserved identity, inflammatory activation, metabolic remodeling, stress, secretory shift, or loss of specialization, rather than merely saying that signal is present.
 
 - `Key Drivers And Limits`:
@@ -657,6 +679,7 @@ Content expectations for each phase 4 section:
   Summarize only the pathway, regulator, and enrichment evidence that materially sharpens or constrains the interpretation.
   Explain how DoRothEA, MSigDB, PROGENy, standard cluster enrichment, DE-derived enrichment, and condition-specific enrichment agree or differ.
   Do not use this section as a generic decoupler dump; point to specific pathway families, regulators, or condition-specific enrichment patterns that support the written story.
+  When pathway or regulator evidence is part of the written interpretation, include the corresponding enrichment plots inline rather than relying only on a manually assembled gene panel.
 
 - `Priority Shortlist For Phase 5`:
   Name the best next deep-dive targets and explain why each one is worth a cluster-level report.
@@ -674,6 +697,7 @@ Rules for phase 4 writing style:
 - When DA is available, explain clearly whether the contrast is mainly a state-change story, an abundance-change story, or a combination of both.
 - If DA is available but non-significant, say that explicitly rather than leaving the reader to infer it.
 - For all directional contrasts, always move from sign to biology: say which side is higher and what that side seems to represent functionally.
+- When the evidence supports it, go one step further and say what that higher side is actually doing, for example stronger adipocyte metabolic structure, inflammatory and APC-like macrophage activation, matrix remodeling, stress signaling, or preserved lineage identity.
 - Across all contrasts, do not just report that a signal exists; explain the nature of the change in biological terms.
 - For interaction contrasts, do not leave the reader with positive-versus-negative coefficients alone; explain what each sign means biologically and which sign carries the more coherent program.
 - Do not split one biological point across multiple near-duplicate headings.
@@ -787,6 +811,7 @@ Content expectations for each phase 5 section:
   State clearly what positive and negative effect sizes mean for the selected contrast and which side or sign carries the clearer biological program.
   If cell-level significance is strong but pseudobulk is weak or absent, call that out explicitly as inflation-prone or provisional.
   For sex-related contrasts, include a compact autosomal sub-readout inside this section that identifies the leading residual non-sex-chromosome program and which side carries it.
+  For interaction contrasts, explicitly report how the sign was decoded from the stored interaction metadata and state the relevant `ref` and `level` settings when they matter for interpretation.
 
 - `Pathway, Activity, And Enrichment Evidence`:
   Explain how DoRothEA, MSigDB, PROGENy, and any relevant enrichment outputs support or complicate the gene-level readout.
@@ -798,11 +823,13 @@ Content expectations for each phase 5 section:
   Reuse existing enrichment figures first when suitable, including cluster-condition enrichment panels.
   Add targeted extra plots only when they materially clarify the story.
   For sex-related contrasts, do not stop at plots dominated by sex-chromosome genes; include at least one focused autosomal validation plot set.
+  When the report makes a gene-level directional claim, include at least one representative violin or heatmap that shows that expression split directly.
 
 - `Interpretation`:
   Provide a short integrative paragraph that explains what the cluster seems to be doing biologically in this contrast.
   Make the directional biology explicit rather than leaving the sign abstract.
   State the nature of the change, not just that the cluster is different.
+  When the evidence allows it, say what the higher side is doing biologically in plain terms rather than stopping at `higher residual` or `clearer program`.
 
 - `Caveats Or Next-Step Notes`:
   Use when the signal is weak, technically suspect, or would benefit from targeted follow-up.
@@ -817,6 +844,7 @@ Rules for phase 5 writing style:
 - If the result is weak or provisional, say so plainly.
 - When DA is available, integrate it into the interpretation explicitly.
 - For all directional contrasts, do not stop at saying that one side is higher; also say what functional program that side seems to represent and whether the opposite side carries a meaningful counterprogram.
+- When the figures support it, explicitly name the biological content of the higher side on the first pass, for example stronger adipocyte-metabolic structure, inflammatory and APC-like macrophage state, broader matrix-associated counterprogram, or preserved identity with weaker stress intrusion.
 - Across all contrasts, describe the nature of the cluster-level change explicitly, for example preserved identity, inflammatory activation, remodeling, stress, dedifferentiation, or secretory shift, rather than only saying that the cluster changes.
 - Do not split the same biological point across multiple headings with overlapping prose.
 - Do not use vague claims such as `the pathway story supports this` without naming the specific pathways, regulators, enrichment panels, or figure features that support it.
@@ -825,6 +853,7 @@ Rules for phase 5 writing style:
 - For sex-related contrasts, always add an explicit autosomal readout that asks whether any coherent non-sex-chromosome biology remains after the obvious X- and Y-linked hits are set aside.
 - For sex-related contrasts, the autosomal readout should be visible in the figures as well as described in prose.
 - For interaction contrasts, explicitly translate positive and negative interaction coefficients into biological language.
+- For interaction contrasts, do not translate the sign until the stored `ref_a`, `ref_b`, `level_a`, `level_b`, and `coef_name` fields have been checked in the active `adata`.
 - Prefer clear statements such as:
   - the cluster changes transcriptionally without detectable abundance change
   - the cluster shows both transcriptional remodeling and abundance expansion
@@ -956,6 +985,9 @@ Phase 6 process-panel rule:
   - contrast-split violins
   - targeted dotplots across the driving clusters or layers
 - Keep custom panels hypothesis-driven and limited to the processes actually discussed in the report.
+- Custom dotplots are not enough on their own when pathway or regulator evidence is central to the synthesis.
+- Reuse or promote the actual Hallmark, PROGENy, DoRothEA, or other enrichment panels inline when they are part of the biological argument.
+- When the synthesis depends on the direction of key genes, include at least one representative violin or similar direct expression view for those genes.
 
 Recommended section order for phase 6 DE synthesis reports:
 
@@ -977,16 +1009,19 @@ Content expectations for each phase 6 section:
   Combine the available-layer summary with the short atlas-level story.
   State which layers were synthesized, which DE and enrichment streams are available, and whether pseudobulk support exists anywhere in the synthesis.
   Explain whether the contrast is broad, focal, or weak, which side carries the more coherent biology, and what kind of change dominates across layers.
+  For interaction contrasts, state explicitly how the sign was decoded from the stored interaction metadata before summarizing which sign is more coherent.
 
 - `Driver Populations And Processes`:
   Combine broad compartment themes, finer driver populations, and process evidence into one tight section.
   Explain which fine populations drive the broad signals, which broad effects disappear or sharpen after refinement, and which pathways or enrichment patterns make that story concrete.
   When custom panels or enrichment materially support the synthesis, interpret them directly here rather than describing them generically elsewhere.
+  If a pathway claim is made here, show the corresponding enrichment figure inline in this section whenever available.
 
 - `Integrated Interpretation`:
   Provide a synthesis paragraph that turns the broad-to-fine signal into one coherent biological readout for the contrast.
   Translate effect direction into biological meaning rather than leaving the synthesis at the level of statistical sign alone.
   Explain what kind of change the contrast represents biologically.
+  If one side is more coherent, state not only that it is more coherent but also what concrete biological program it carries.
 
 - `Confidence And Caveats`:
   State whether the synthesis is supported by pseudobulk, by cell-level-only evidence, by cross-layer agreement, or by targeted panels.
@@ -1003,8 +1038,10 @@ Rules for phase 6 writing style:
 - Be cautious about process naming unless the gene-level evidence and custom panels support it.
 - Treat pseudobulk-supported conclusions as stronger than cell-level-only conclusions.
 - For directional contrasts, always state which side carries the more coherent residual biology and what that biology appears to be.
+- Do not stop at relative phrasing such as `more coherent residual`. Use the first pass to explain what that side is actually doing, for example stronger adipocyte metabolic structure, more inflammatory myeloid activation, more matrix-associated counterprogram, or preserved lineage identity.
 - Across all contrasts, describe the nature of the cross-layer change explicitly rather than only noting that a signal survives refinement.
 - For interaction contrasts, explicitly identify which sign carries the more convincing program and what that implies biologically.
+- For interaction contrasts, always ground that sign call in the stored `ref_a`, `ref_b`, `level_a`, `level_b`, and `coef_name` metadata from the active `adata`, not in a guessed verbal shorthand.
 - Keep the number of top-level sections tight.
 - Do not separate the same claim across `summary`, `themes`, and `drivers` headings unless each section adds genuinely different information.
 - Do not use vague synthesis language such as `the process panel supports this` without naming the specific genes, pathways, or cluster-condition blocks that are visible in the figures.
@@ -1118,6 +1155,7 @@ Cross-contrast synthesis rules:
 - If a signal appears in one contrast but not another, say that explicitly and interpret why that matters biologically.
 - Summarize null or weak findings when they materially narrow the interpretation.
 - Across all directional contrasts, say not only that an effect is present, but also which side is biologically more coherent and what that side appears to be doing.
+- Do not settle for generic language such as `female-higher residual` or `male-higher program`. The first synthesis pass should already say whether that side reflects stronger adipogenesis, more inflammatory myeloid activation, more matrix remodeling, more stress signaling, preserved specialization, or another concrete biological state.
 - Across the project as a whole, do not merely list which contrasts are positive; explain the nature of the major biological changes that recur or diverge across contrasts.
 - When enrichment is available, distinguish whether it is supporting baseline identity, contrast-linked pathway change, or condition-specific pathway state.
 
@@ -1132,6 +1170,9 @@ Phase 7 process-panel rule:
   - contrast-split violins for the key synthesis genes
   - UMAPs showing the main project-level process genes
 - Existing enrichment outputs can also be reused as project-level process evidence when they sharpen the final narrative more clearly than de novo manual panels.
+- Do not rely on custom dotplots alone when pathway or regulator interpretation is central to the final story.
+- Promote the actual enrichment plots inline when they carry the evidence for the narrative.
+- Include at least one representative violin or equivalent direct expression panel for the key synthesis genes when directionality at gene level is part of the claim.
 
 Recommended section order for phase 7 synthesis reports:
 
@@ -1158,6 +1199,7 @@ Content expectations for each phase 7 section:
   State the main project-level biological findings directly.
   Summarize the strongest predictive, mechanistic, and contrast-level signals without turning this section into a contrast-by-contrast list.
   Be explicit about which side is more coherent for directional findings and what kind of biological change it represents.
+  Do not stop at saying that one side is more coherent. Also state what that side is actually doing biologically when the evidence supports that level of interpretation.
 
 - `Cross-Contrast And Cross-Layer Resolution`:
   Explain which broad findings recur across contrasts, which ones are contrast-specific, and which broad compartment signals refine into specific driver populations.
@@ -1166,9 +1208,11 @@ Content expectations for each phase 7 section:
 - `Process Evidence`:
   Describe the targeted custom panels and any enrichment evidence used to support the final integrated story.
   Explain why those genes or pathway panels were chosen and what they show.
+  When pathway or regulator evidence is central, show the corresponding enrichment figure inline rather than referring to it abstractly.
 
 - `Integrated Interpretation`:
   Provide the main biological narrative for the project in one coherent synthesis paragraph or short set of paragraphs.
+  Make the directional biology explicit in concrete terms. If one side is stronger, say what biological program that side carries and what the opposite side looks like if it is interpretable.
 
 - `Confidence And Limitations`:
   State the main strengths and weaknesses of the evidence base, including pseudobulk availability, DA support, and cell-level-only limitations.
