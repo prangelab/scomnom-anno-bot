@@ -1458,6 +1458,18 @@ Rules for phase 8 writing style:
 
 Rules for phase 8 HTML output:
 
+- Use the same clean single-page design language as the phase 3 through phase 7 reports so outputs look consistent across projects.
+- Use bordered sections, inline galleries, and local copied assets only.
+- Copy every figure used by the HTML into the sibling asset directory.
+- Use targeted figures rather than visually dense summary plots when presentation clarity matters.
+- Use the standard inline clickable lightbox behavior.
+
+Rules for phase 8 TXT output:
+
+- Preserve the same section order and mechanistic logic as the HTML report.
+- Keep the prose readable without links or HTML.
+- Name the critical genes, pathways, regulators, and candidate routes directly in text.
+
 Define these chat commands for cross-contrast mechanistic synthesis after phase 8:
 
 - `perform phase 9 mechanistic synthesis`
@@ -1617,92 +1629,6 @@ Rules for phase 9 TXT output:
 - Preserve the same section order and adjudicative logic as the HTML report.
 - Keep the prose readable without links or HTML.
 - Make the mechanistic comparison understandable even without figures.
-
-- Use the same clean single-page design language as the phase 3 through phase 7 reports so outputs look consistent across projects.
-- Use bordered sections, inline galleries, and local copied assets only.
-- Copy every figure used by the HTML into the sibling asset directory.
-- Use targeted figures rather than visually dense summary plots when presentation clarity matters.
-- Use the standard inline clickable lightbox behavior.
-
-Rules for phase 8 TXT output:
-
-- Preserve the same section order and mechanistic logic as the HTML report.
-- Keep the prose readable without links or HTML.
-- Name the critical genes, pathways, regulators, and candidate routes directly in text.
-
-For doublet QC in phase 1 overview reports:
-
-- Do not use the per-sample doublet-fraction bar plot as a main illustrative figure when the thresholding procedure was configured to enforce a target doublet fraction.
-- In that situation, prefer more informative doublet visuals such as:
-  - doublet score histograms
-  - doublet score ECDF plots
-  - doublet score versus total counts
-  - inferred threshold plots
-- The goal is to illustrate doublet-score behavior and thresholding, not the enforced equality of final retained doublet fractions.
-
-For each cluster, create these files in the active context:
-
-- `annotation/CXX.md`: working note in Markdown with links to relevant files and figures.
-- `annotation/CXX.html`: structured rendered report for browsing locally in Safari or another browser.
-- `annotation/CXX.txt`: plain text version without links, suitable for TextEdit or simple reading.
-- `annotation/CXX_assets/`: local asset bundle containing every figure and table copy used by the HTML report.
-
-Use the HTML report as the main polished output. It should be self-contained at the folder level, meaning the HTML should only reference files inside its own sibling asset directory such as `C13_assets/...`, not paths elsewhere in the project. This avoids browser sandbox issues with local file rendering.
-
-Each per-cluster report should contain these sections in this order:
-
-- Cluster identifier
-- Preferred label
-- Verdict
-- Marker evidence
-- Specificity evidence
-- Pathway and activity evidence
-- Validation panel
-- Naming rationale
-- Literature support
-- Optional clustering or QC evidence
-- Optional uncertainty or next-step notes
-
-Content expectations for each section:
-
-- Cluster identifier:
-  Include the cluster id prominently as the page title, for example `C13`.
-- Preferred label:
-  State the current working name in the preferred naming style, for example `PAX5+ BANK1+ Naive B cells`.
-- Verdict:
-  Give a concise but complete summary paragraph of the current biological interpretation.
-  This section must explicitly synthesize the evidence rather than just restate the label.
-  It should say what the cluster is, what the main alternative interpretations were when relevant, and why the current interpretation fits best across all evidence lines together.
-- Marker evidence:
-  Summarize both cell-level and pseudobulk top markers, using the actual ranked marker tables when available.
-  Name the most informative ranked genes, describe the lineage or state they support, and mention disagreements between cell-level and pseudobulk evidence when relevant.
-- Specificity evidence:
-  Refer to dotplots, violin plots, UMAPs, and any custom panel plots to explain why the identity is specific relative to other clusters.
-  Make clear whether the proposed markers are truly concentrated in the target cluster or shared with nearby states.
-- Pathway and activity evidence:
-  Summarize relevant MSigDB, PROGENy, and DoRothEA evidence. Treat these as supporting context rather than the main naming source.
-  Explain what the pathway or TF activity adds biologically to the marker-based interpretation rather than listing terms mechanically.
-- Validation panel:
-  Include the exact gene list used or proposed for custom validation plots, preferably in a Python list block.
-  State whether all genes plotted successfully, whether any had to be replaced, and what the resulting panel contributed to the interpretation.
-- Naming rationale:
-  Explain why the chosen two marker genes and descriptive phrase are appropriate.
-  Connect the final name back to the earlier sections and justify both the marker pair and the descriptive wording.
-- Literature support:
-  Include 2 to 3 references with citation name, year, and DOI.
-  State briefly what each reference supports.
-- Optional clustering or QC evidence:
-  Use this section when clustering QC materially affects the interpretation, for example for high-mito clusters, tiny clusters, poor silhouette support, single-sample clusters, likely contaminants, or possible doublets.
-  Place this section near the top of the report when it is central to the verdict.
-- Optional uncertainty or next-step notes:
-  Note ambiguity, conflicting evidence, or follow-up plots that would help resolve the identity.
-
-Deep-dive reports should follow a polished cluster-note structure.
-They should read like polished scientific annotation notes, with each evidence type in its own clearly labeled section and with enough descriptive text that the reasoning is understandable without needing chat history.
-Do not jumble markers, specificity, pathways, validation, and naming rationale into one mixed paragraph.
-
-Deep-dive reports are not the same as phase 1 overview reports.
-Use a true cluster-note style, not the more summary-like overview structure used in phase 1 reports.
 When in doubt, follow the portable examples in:
 - `templates/report_templates/deep_dive_template.html`
 - `templates/report_templates/deep_dive_template.txt`
