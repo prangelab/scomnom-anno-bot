@@ -1,6 +1,6 @@
 # Purpose
 
-Version: `0.3.1`
+Version: `0.3.2`
 
 This `AGENTS.md` is a portable workflow guide for annotating `scOmnom` analysis outputs across projects. Use it as the shared workflow layer, and keep dataset-specific assumptions in a separate local override file when needed.
 
@@ -1413,6 +1413,166 @@ Rules for phase 8 writing style:
 - Stay concise even when the biology is complex.
 
 Rules for phase 8 HTML output:
+
+Define these chat commands for cross-contrast mechanistic synthesis after phase 8:
+
+- `perform phase 9 mechanistic synthesis`
+- `generate phase 9 mechanistic synthesis`
+- `phase 9 mechanistic synthesis`
+- `perform phase 9 mechanistic synthesis across contrasts`
+- `perform phase 9 mechanistic synthesis focusing on question X`
+
+Interpret these commands as a cross-contrast mechanistic integration workflow. The purpose is to synthesize the contrast-specific phase 8 conclusions into one project-level mechanistic model and to answer, when possible, the open questions that phase 8 identified as the most informative next analyses.
+
+Phase 9 should remain evidence-disciplined. It should not simply restate all phase 8 reports in sequence. Instead, it should:
+
+- identify which phase 8 hypotheses are shared across contrasts and which are contrast-specific
+- distinguish baseline-context biology from disease-amplified biology
+- identify which upstream mechanisms remain plausible after all relevant contrasts are considered together
+- identify which mechanisms weaken or fail once cross-contrast comparison is applied
+- answer, when the available evidence allows it, the open questions posed in the `Most Informative Next Analyses` sections of the relevant phase 8 reports
+- state clearly which questions remain unresolved even after cross-contrast synthesis
+
+When running a phase 9 mechanistic synthesis:
+
+- Treat phase 9 as a synthesis task built on top of phase 8, not as a replacement for phase 8.
+- Use the full set of relevant phase 8 reports as the primary mechanistic backbone.
+- Revisit the associated phase 6 and phase 7 reports only when needed to sharpen a disputed or incomplete point.
+- If some contrasts have much stronger mechanistic support than others, weight them accordingly rather than forcing false symmetry.
+- If CCC evidence exists for some contrasts but not others, state that explicitly and preserve the asymmetry.
+- Use contrast comparison to adjudicate whether a mechanism looks:
+  - background-shared
+  - disease-specific
+  - sex-specific
+  - endothelial-conditioned
+  - immune-amplified
+  - hepatocyte-led
+  - unresolved
+
+Store phase 9 synthesis outputs in the active context `annotation/phase9/` folder.
+
+For phase 9 synthesis reports, create:
+
+- one structured `.html` synthesis report
+- one matching plain-text `.txt` synthesis report
+- one local asset directory named after the report basename, for example `de_phase9_mechanistic_master_synthesis_assets/`
+
+The phase 9 synthesis should summarize:
+
+- the main project-level mechanistic question
+- the key phase 8 hypotheses being brought forward
+- which mechanisms are shared versus contrast-specific
+- which features look like baseline context versus disease-amplified biology
+- which CCC route families remain plausible after cross-contrast comparison
+- which phase 8 `Most Informative Next Analyses` questions can now be answered from the existing evidence
+- which open mechanistic questions remain unresolved
+- a working integrated mechanistic model for the project
+
+Do not use phase 9 to:
+
+- re-summarize every phase 8 report one by one without adjudication
+- flatten contrast-specific mechanisms into one forced unified story
+- promote provisional phase 8 hypotheses into stronger claims without new cross-contrast support
+- ignore contradictions or asymmetries between contrasts
+
+Instead, phase 9 should read like a disciplined project-level mechanistic synthesis:
+
+- more integrative than phase 8
+- more adjudicative than phase 7
+- explicit about what is shared, what is contextual, and what remains open
+- still anchored to concrete outputs from phases 6 to 8
+
+Recommended data inputs for phase 9:
+
+- all relevant phase 8 mechanistic synthesis reports
+- the relevant phase 7 project-level synthesis report
+- the relevant phase 6 contrast synthesis reports
+- targeted CCC tables or figures needed to adjudicate specific contrast differences
+- literature notes used to contextualize phase 8 hypotheses when they help resolve cross-contrast interpretation
+- project-local mechanistic framing notes when available
+
+Evidence rules for phase 9:
+
+- Always integrate all relevant evidence streams that exist across the included phase 8 reports:
+  - gene-level DE
+  - differential abundance
+  - pathway, regulator, and enrichment evidence
+  - CCC evidence when available
+- Do not treat absence of CCC in one contrast as evidence against a mechanism if the CCC layer was never available or was intrinsically indirect there.
+- When a mechanism is supported in one contrast but not another, explain whether that difference is biologically meaningful, expected from the study design, or more likely a power or export limitation.
+- Prefer cross-contrast conclusions that explain multiple observations at once over conclusions that depend on one isolated edge or one isolated pathway label.
+- If a question raised in `Most Informative Next Analyses` can now be answered by comparing the available phase 8 reports, answer it explicitly.
+- If a question cannot yet be answered, say so explicitly and explain why.
+
+Recommended section order for phase 9 mechanistic synthesis reports:
+
+- `Phase 9 Mechanistic Synthesis`
+- `Scope`
+- `Project-Level Mechanistic Question`
+- `Phase 8 Hypotheses Brought Forward`
+- `Shared Versus Contrast-Specific Mechanisms`
+- `Baseline Context Versus Disease-Amplified Biology`
+- `Cross-Contrast Cell-Cell Communication Interpretation`
+- `Questions Resolved From Phase 8 Follow-Up`
+- `Remaining Uncertainties`
+- `Working Integrated Mechanistic Model`
+
+Content expectations for each phase 9 section:
+
+- `Scope`:
+  State the active context, which phase 8 contrasts are being integrated, and whether CCC evidence is direct, indirect, or absent for each.
+
+- `Project-Level Mechanistic Question`:
+  State the narrow project-level mechanistic question that phase 9 is trying to answer from the full contrast set.
+
+- `Phase 8 Hypotheses Brought Forward`:
+  Summarize only the mechanistic hypotheses that matter for cross-contrast adjudication.
+  Do not restate every phase 8 detail.
+
+- `Shared Versus Contrast-Specific Mechanisms`:
+  Separate mechanisms that recur across contrasts from mechanisms that appear only in one context.
+  Explain whether the contrast specificity is biologically meaningful.
+
+- `Baseline Context Versus Disease-Amplified Biology`:
+  Distinguish signals that appear already in the background state from signals that sharpen or emerge in disease or other stressed contexts.
+
+- `Cross-Contrast Cell-Cell Communication Interpretation`:
+  Explain which CCC route families remain plausible after comparison across contrasts.
+  Distinguish direct CCC evidence from indirect pooled support.
+  State where CCC strengthens, weakens, or leaves unchanged the phase 8 conclusions.
+
+- `Questions Resolved From Phase 8 Follow-Up`:
+  Revisit the open questions named in the `Most Informative Next Analyses` sections of the underlying phase 8 reports.
+  Answer them where the current evidence allows it.
+  Keep these answers explicit and concrete.
+
+- `Remaining Uncertainties`:
+  State which mechanistic questions still cannot be answered and why.
+  This can include power limits, missing CCC contrasts, unresolved directionality, or lack of orthogonal validation.
+
+- `Working Integrated Mechanistic Model`:
+  End with a concise project-level mechanistic model that integrates the contrast-specific findings without overstating causal certainty.
+
+Rules for phase 9 writing style:
+
+- Write phase 9 as a project-level mechanistic adjudication memo, not as a catalog.
+- Keep the language concrete and biologically specific.
+- Prefer a layered model over a forced unified model when the evidence is asymmetric.
+- Be explicit when one contrast is the mechanistic centerpiece and others serve mainly as context or support.
+- Keep the prose concise despite the larger scope.
+
+Rules for phase 9 HTML output:
+
+- Use the same clean single-page design language as the phase 3 through phase 8 reports so outputs look consistent across projects.
+- Use bordered sections, inline galleries, and local copied assets only.
+- Prefer a small number of targeted figures over dense visual summaries.
+- Use clickable lightbox images and copy every figure used by the HTML into the matching local asset directory.
+
+Rules for phase 9 TXT output:
+
+- Preserve the same section order and adjudicative logic as the HTML report.
+- Keep the prose readable without links or HTML.
+- Make the mechanistic comparison understandable even without figures.
 
 - Use the same clean single-page design language as the phase 3 through phase 7 reports so outputs look consistent across projects.
 - Use bordered sections, inline galleries, and local copied assets only.
