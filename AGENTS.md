@@ -1,6 +1,6 @@
 # Purpose
 
-Version: `0.3.0`
+Version: `0.3.1`
 
 This `AGENTS.md` is a portable workflow guide for annotating `scOmnom` analysis outputs across projects. Use it as the shared workflow layer, and keep dataset-specific assumptions in a separate local override file when needed.
 
@@ -249,6 +249,18 @@ If gene-level DE and pathway-level evidence appear to tell different stories, do
 - adjust the biological conclusion accordingly
 
 When pathway, regulator, or enrichment outputs materially sharpen the biology, they must appear directly in the written interpretation, not just in figures or captions.
+
+# Report anti-drift rules
+
+Use these rules as a repeated final check for all saved phase reports, especially phases 3 to 8.
+
+- Stay concise. Prefer dense, direct prose over padded explanation or report-like self-commentary.
+- Use all relevant evidence streams that exist for the task rather than leaning on a single convenient plot family.
+- In final HTML reports, prefer a small number of targeted, readable figures over visually dense summary plots when both are available.
+- Name the concrete genes, pathways, regulators, contrasts, or cluster-condition blocks that support each conclusion.
+- Keep HTML reports self-contained with local copied assets only.
+- Use clickable inline images with the standard lightbox behavior in HTML reports.
+- Do not let captions or body text drift into prompt-like language about what the report is trying to do. Describe what the data show.
 - Use the final merged label names exactly as stored in the merged object or as displayed in the final merged UMAP figures.
 - Do not redo a full evidence-first annotation workflow unless the user explicitly asks for re-evaluation.
 - Treat this as a reporting and atlas-summary task, not as an adjudication task.
@@ -1187,6 +1199,232 @@ Rules for phase 7 TXT output:
 - Preserve the same section order and synthesis logic as the HTML report.
 - Keep the prose readable without links or HTML.
 - Refer to process panels clearly in text so the reasoning remains understandable even without the figures.
+
+Use these templates as the default baseline for mechanistic synthesis reports when phase 8 templates are added later. Until then, phase 7 templates can be adapted cautiously:
+
+- `templates/report_templates/de_phase7_master_synthesis_template.html`
+- `templates/report_templates/de_phase7_master_synthesis_template.txt`
+
+Define these chat commands for mechanistic follow-up after the project-level synthesis:
+
+- `perform phase 8 mechanistic synthesis`
+- `generate phase 8 mechanistic synthesis`
+- `phase 8 mechanistic synthesis`
+- `perform phase 8 mechanistic synthesis for contrast X`
+- `perform phase 8 mechanistic synthesis for contrast X focusing on populations A, B, C`
+- `perform phase 8 mechanistic synthesis for contrast X focusing on theme Y`
+
+Interpret these commands as a mechanistic synthesis and hypothesis-generation workflow. The purpose is to move beyond `what changes and where` and ask `what upstream biology could plausibly explain the observed changes`.
+
+Phase 8 should remain evidence-disciplined. It should not claim causality from expression data alone. Instead, it should:
+
+- identify the main driver programs that require explanation
+- distinguish likely primary responder populations from secondary responder populations
+- ask whether the observed biology is more consistent with intrinsic state differences, altered sender behavior, altered receiver behavior, altered tissue context, or a mixture of these
+- identify recurring upstream axes across driver populations
+- rank plausible mechanistic hypotheses
+- state clearly which parts are directly supported and which parts remain provisional
+
+When running a phase 8 mechanistic synthesis:
+
+- Treat phase 8 as a synthesis task built on top of phases 4 to 7, not as a replacement for them.
+- Start from the most important contrast or contrast subset rather than trying to explain every contrast equally.
+- Use phase 7 as the main biological backbone.
+- Use the relevant phase 4, phase 5, and phase 6 reports to inspect which populations, pathways, regulators, and process genes drive the pattern.
+- If the user has not specified a focal contrast, default to the biologically central contrast from the current project context.
+- If cell-cell communication outputs are available, integrate them as an additional mechanistic evidence layer.
+- If cell-cell communication outputs are not yet available, perform the expression-level mechanistic synthesis anyway and explicitly frame CCC as a next-step test rather than silently omitting it.
+
+Store phase 8 synthesis outputs in the active context `annotation/phase8/` folder.
+
+For phase 8 synthesis reports, create:
+
+- one structured `.html` synthesis report
+- one matching plain-text `.txt` synthesis report
+- one local asset directory named after the report basename, for example `de_phase8_mechanistic_synthesis_assets/`
+
+The phase 8 synthesis should summarize:
+
+- the focal biological question
+- the main driver programs that need mechanistic explanation
+- the key driver populations and broader layers that carry those programs
+- the most plausible shared upstream axes from gene, pathway, regulator, and abundance evidence
+- candidate sender and receiver logic when that can be inferred from the available evidence
+- candidate CCC routes when CCC evidence is available
+- a ranked list of mechanistic hypotheses
+- the strongest alternative explanations and unresolved uncertainties
+- the most informative next analyses
+
+Do not use phase 8 to:
+
+- restate phase 7 in slightly different words
+- promote every pathway hit into an upstream mechanism
+- flatten expression-level association into proven causality
+- force a CCC story when no CCC evidence exists yet
+
+Instead, phase 8 should read like a disciplined mechanistic memo:
+
+- more interpretive than phase 7
+- more hypothesis-focused than phase 6
+- still anchored to concrete project outputs
+- explicit about uncertainty and directionality
+
+Recommended data inputs for phase 8:
+
+- the relevant phase 7 synthesis report
+- the relevant phase 6 contrast synthesis report or reports
+- the relevant phase 5 DE reports for the main driver populations
+- the relevant phase 4 atlas-level DE overview report
+- targeted gene-level DE tables for the main driver populations
+- targeted enrichment outputs for the main driver populations and broader layers
+- differential-abundance outputs when they help distinguish state change from expansion or contraction
+- custom targeted panels when they sharpen a mechanistic axis
+- CCC outputs when available
+- literature notes or project-local mechanistic framing notes when available
+
+Cell-cell communication inputs may come from project-specific external result trees rather than from standard `scOmnom` outputs. When CCC is available, inspect the local file structure first and do not assume a fixed exporter layout.
+
+Common CCC formats to expect in phase 8:
+
+- LIANA-style long tables, usually one row per source-target-ligand-receptor interaction with multiple scoring columns such as magnitude, specificity, permutation-derived support, and an aggregate or consensus rank
+- CellChat pathway or interaction outputs, often emphasizing pathway-level communication probability, sender-receiver network summaries, pathway information flow, and comparative network visualizations
+- overlap or consensus tables linking multiple CCC methods
+- project-specific summary figures such as bubble plots, circle plots, chord plots, or heatmaps
+
+Practical strengths and weaknesses of LIANA for phase 8:
+
+- Strengths:
+  - strong for edge-level inspection because source, target, ligand, and receptor are already explicit in a tabular format
+  - convenient for cross-condition comparison when per-group tables exist
+  - flexible because it can integrate multiple resources and scoring methods
+  - consensus ranking is useful for prioritization when many edges are present
+- Weaknesses:
+  - still depends on prior knowledge resources and scoring choices
+  - consensus rank is a prioritization device, not an effect size
+  - highly ranked edges can still be biologically generic or structurally abundant rather than truly mechanism-defining
+  - not by itself a pathway-causal model
+
+Practical strengths and weaknesses of CellChat for phase 8:
+
+- Strengths:
+  - strong for pathway-level and network-level interpretation
+  - useful for identifying sender and receiver roles, pathway families, and comparative changes in communication flow
+  - often easier than edge tables for seeing the broad architecture of a communication program
+- Weaknesses:
+  - output can be visually dense and harder to convert into a short mechanistic memo without targeted extraction
+  - pathway-level communication probability is a modeled interaction-strength quantity, not literal causal proof
+  - depending on what was exported, direct edge-wise cross-condition comparison may be less convenient than with LIANA tables
+
+How to use LIANA and CellChat together in phase 8:
+
+- Use LIANA as the primary edge-level evidence when explicit per-condition interaction tables are available.
+- Use CellChat as pathway-level and network-level context when raw CellChat pathway or network outputs are available.
+- If only a CellChat overlap summary is available, use it as orthogonal robustness support rather than as a second full CCC evidence stream.
+- Prefer interactions that are coherent with the phase 4 to phase 7 gene-level and pathway-level biology over interactions that rank well numerically but do not match the main expression programs.
+- Distinguish clearly between:
+  - conserved backbone interactions that appear in multiple groups
+  - condition-enriched interactions that plausibly explain the focal contrast
+  - method-specific edges that may be interesting but remain provisional
+- When possible, connect CCC edges back to concrete driver populations and expression programs already established in phases 5 to 7.
+
+Evidence rules for phase 8:
+
+- Always integrate all relevant expression-level evidence streams that exist for the focal question:
+  - gene-level DE
+  - differential abundance
+  - pathway, regulator, and enrichment evidence
+- If CCC outputs exist, treat them as an added mechanistic evidence layer rather than a replacement for expression-level evidence.
+- If multiple CCC methods are present, do not collapse them into false certainty. State which method provides the primary usable evidence and which method provides secondary support.
+- If CCC outputs do not exist yet, say so explicitly and keep the mechanistic claims at the level justified by the existing data.
+- Do not infer an upstream mechanism from a single pathway label alone when the broader evidence is inconsistent.
+- Do not infer an upstream mechanism from a single ligand-receptor edge alone when the broader expression evidence is inconsistent.
+- Prefer mechanisms that explain multiple driver populations at once over mechanisms supported by only one marginal cluster.
+- When competing mechanisms are plausible, state them side by side and explain which evidence currently favors one over the other.
+
+Recommended section order for phase 8 mechanistic synthesis reports:
+
+- `Phase 8 Mechanistic Synthesis`
+- `Scope`
+- `Biological Question`
+- `Driver Programs To Explain`
+- `Primary And Secondary Responder Populations`
+- `Shared Upstream Axes From Expression Evidence`
+- `Candidate Sender And Receiver Logic`
+- `Candidate Cell-Cell Communication Routes`
+- `Ranked Mechanistic Hypotheses`
+- `Alternative Explanations And Caveats`
+- `Most Informative Next Analyses`
+- `Working Mechanistic Takeaway`
+
+Content expectations for each phase 8 section:
+
+- `Scope`:
+  State the active context, focal contrast, and whether CCC evidence is available yet.
+
+- `Biological Question`:
+  State the mechanistic question in plain language. It should usually be narrower than the overall phase 7 question.
+
+- `Driver Programs To Explain`:
+  Name the actual gene-level and pathway-level programs that need explanation.
+  Distinguish broad state axes such as inflammatory activation, metabolic remodeling, trafficking, stress, fibrosis, interferon signaling, endothelial activation, scavenging, or bile handling when relevant.
+
+- `Primary And Secondary Responder Populations`:
+  Identify which populations look central to the biology and which look secondary or downstream.
+  Use both fine and broad annotation layers when helpful.
+
+- `Shared Upstream Axes From Expression Evidence`:
+  Explain which recurring pathways, regulators, or process genes recur across the driver populations and therefore look like plausible upstream or coordinating axes.
+
+- `Candidate Sender And Receiver Logic`:
+  Use marker, receptor, ligand, and pathway context to describe which populations look like plausible signal senders or receivers.
+  If the available evidence is too weak to support sender or receiver assignment, say so.
+
+- `Candidate Cell-Cell Communication Routes`:
+  If CCC outputs are available, summarize the routes that best match the expression-level story, and state which package or result table those routes came from.
+  Distinguish route-level evidence that is direct from route-level evidence that is only supported by overlap or consensus summaries.
+  If CCC outputs are not available yet, state the most relevant routes to test later and why.
+
+- `Ranked Mechanistic Hypotheses`:
+  Present a short ranked list.
+  For each hypothesis, state:
+  - the proposed mechanism
+  - the key supporting populations
+  - the key supporting genes, pathways, or regulators
+  - the role of CCC evidence if available, including whether it is LIANA edge support, CellChat pathway or network support, or only cross-method overlap support
+  - the main weakness or uncertainty
+
+- `Alternative Explanations And Caveats`:
+  State what else could explain the same pattern, including power limits, mixed disease severity, weak DA support, or unresolved directionality.
+
+- `Most Informative Next Analyses`:
+  State what would most efficiently strengthen or weaken the top hypotheses.
+  CCC can be one of these next analyses when it is not yet available.
+
+- `Working Mechanistic Takeaway`:
+  End with a concise, evidence-weighted mechanistic summary, clearly separated from stronger causal claims.
+
+Rules for phase 8 writing style:
+
+- Write phase 8 as a mechanistic memo, not as a review article.
+- Keep the language concrete and biologically specific.
+- Be explicit about which programs are broader and which are narrower counter-signals.
+- Separate data-supported mechanism from hypothesis extension cleanly.
+- Prefer a small number of ranked hypotheses over a long catalog of possibilities.
+- Stay concise even when the biology is complex.
+
+Rules for phase 8 HTML output:
+
+- Use the same clean single-page design language as the phase 3 through phase 7 reports so outputs look consistent across projects.
+- Use bordered sections, inline galleries, and local copied assets only.
+- Copy every figure used by the HTML into the sibling asset directory.
+- Use targeted figures rather than visually dense summary plots when presentation clarity matters.
+- Use the standard inline clickable lightbox behavior.
+
+Rules for phase 8 TXT output:
+
+- Preserve the same section order and mechanistic logic as the HTML report.
+- Keep the prose readable without links or HTML.
+- Name the critical genes, pathways, regulators, and candidate routes directly in text.
 
 For doublet QC in phase 1 overview reports:
 
