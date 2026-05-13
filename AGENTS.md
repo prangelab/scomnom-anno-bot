@@ -272,6 +272,8 @@ For all DE-focused later phases (`phase 4`, `phase 5`, `phase 6`, and `phase 7`)
 
 Treat this as a hard requirement, not an optional embellishment.
 
+Treat DE-derived GSEA as an additional pathway-level evidence stream from phase 4 onward.
+
 At minimum, later-phase DE interpretation must explicitly consider:
 
 - the leading DE genes and their directionality
@@ -281,7 +283,26 @@ At minimum, later-phase DE interpretation must explicitly consider:
   - DoRothEA
   - PROGENy
   - Reactome
+  - DE-derived GSEA outputs when available
   - other available DE-derived or condition-specific enrichment outputs
+
+Canonical locations for these DE pathway-level outputs are:
+
+- rendered panels under the active DE result tree in `figures/`
+- full enrichment result tables under the active DE result tree in `tables/`
+
+When DE-derived GSEA outputs are available, weight pathway-level evidence in this order:
+
+- highest-confidence pathway evidence:
+  - terms that appear in the joined decoupler-GSEA plot
+  - point in the same direction in both layers
+  - and are significant in GSEA
+- next pathway-evidence tier:
+  - significant standalone GSEA terms that are not part of the joined overlap set
+- supportive pathway context:
+  - decoupler-only pathway outputs without formal GSEA significance
+
+Do not treat decoupler-only pathway outputs as the strongest inferential pathway layer when significant GSEA results are available.
 
 Do not write later-phase DE conclusions from marker genes or top DE genes alone when pathway or regulator evidence is available.
 
@@ -292,6 +313,11 @@ If gene-level DE and pathway-level evidence appear to tell different stories, do
 - adjust the biological conclusion accordingly
 
 When pathway, regulator, or enrichment outputs materially sharpen the biology, they must appear directly in the written interpretation, not just in figures or captions.
+When writing pathway claims, make clear whether they are supported by:
+
+- joined decoupler-GSEA overlap with significant GSEA support
+- significant standalone GSEA support
+- or decoupler-only supportive context
 
 # Report anti-drift rules
 
@@ -664,6 +690,7 @@ Recommended data inputs for phase 4:
   - enrichment HTML reports and settings summaries
   - condition-specific enrichment heatmaps, dotplots, and per-group barplots
   - DE-derived enrichment outputs
+  - DE-derived GSEA plots and result tables
 
 Enrichment-evidence rules for phase 4:
 
@@ -672,6 +699,8 @@ Enrichment-evidence rules for phase 4:
   - standard cluster-level enrichment for baseline population identity
   - DE-derived enrichment for pathway or regulator shifts between contrast sides
   - condition-specific cluster enrichment for the pathway state of each cluster-condition group
+- When DE-derived GSEA is available for the same contrast, treat the joined decoupler-GSEA panel as the preferred compact pathway overview for the main driver compartments.
+- Use the full GSEA result tables in `tables/` when the written interpretation depends on exact term ranking, significance, or overlap status.
 - Use the enrichment report, when present, to confirm:
   - round or annotation layer
   - condition key
