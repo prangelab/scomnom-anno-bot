@@ -84,6 +84,48 @@ Startup behavior rules:
 - For phase 1 work, inspect the relevant global QC outputs early so later interpretations are grounded in dataset quality.
 - For deep dives, confirm that the cluster-specific report should be written into the active context, not a previously used one.
 
+scOmnom dataset I/O rule:
+
+- Always use the native `scomnom` dataset load and save functions for `scOmnom` dataset archives such as `.zarr.tar.zst`.
+- Do not bypass `scomnom` dataset I/O with ad hoc direct `anndata` reads or writes unless the user explicitly requests a different workflow or a native `scomnom` function is unavailable for the required operation.
+- When writing derived `scOmnom`-format objects in later phases, use the corresponding native `scomnom` save path rather than custom archive handling.
+
+Destructive command approval rule:
+
+- Treat destructive filesystem actions such as `rm`, recursive deletion, or cleanup steps that remove existing outputs as case-by-case operations.
+- Do not rely on previously granted blanket approval for destructive commands.
+- Request explicit approval for the specific removal step unless the user has just asked for that exact deletion.
+
+HPC-scale analysis rule:
+
+- If a requested analysis depends on GPU resources, heavy tensor decomposition, or other clearly HPC-scale computation, do not force it through the local runtime.
+- Instead, write a reproducible notebook or script in the project tree, state the intended environment and expected outputs, and leave execution to the user's HPC environment when appropriate.
+- This is especially relevant for TensorLy- or scITD-style tensor workflows when the local environment is missing the required stack or is not the right place to run them.
+
+Local R environment rule:
+
+- When local R analysis is needed, prefer a project-local `renv`.
+- Do not clutter the base R environment with analysis-specific package installs when a project-local `renv` is a reasonable option.
+- Keep any `renv` bootstrap or runtime instructions in the active project phase directory.
+
+Exact method naming rule:
+
+- Do not present a custom approximation as if it were the exact published method.
+- Use names like `scITD` only when the official method or a clearly faithful implementation of its documented workflow is actually being run.
+- If an exploratory approximation is useful, label it explicitly as exploratory and separate from the canonical method.
+
+Per-cell module enrichment rule:
+
+- When an analysis phase defines explicit module sets and the question would benefit from locating those programs on the atlas, add a per-cell module-enrichment layer alongside sample-level summaries.
+- Keep module definitions in an auditable project table with explicit evidence classes such as `DE`, `CCC`, or compiled mixed-evidence modules.
+- Prefer a rank-based scoring method for per-cell module enrichment.
+- When available in the active Python runtime, prefer `decoupler.mt.aucell`.
+- If no suitable Python implementation is available, use another documented rank-based equivalent or a project-local R `AUCell` workflow in `renv`.
+- Do not label a custom fallback as the exact published `AUCell` method unless the official implementation is actually being used.
+- Write derived score tables and figures under the active phase directory, not ad hoc elsewhere in the project tree.
+- For plotting, prefer the portable `scomnom` UMAP route such as `om.plotting.plot_de_umap_features_grid(...)`, using module-score columns added to `adata.obs` or another explicit derived table.
+- When many modules are present, organize UMAP outputs by tissue and, when helpful, by evidence class so the figures remain readable.
+
 # Directory guidance
 
 Apply any dataset-specific directory exclusions from `project-local.md` first.
@@ -560,6 +602,17 @@ Instead, phase 4 should read like an atlas-level DE triage memo:
 - clear about where the real biology appears to be
 - clear about what deserves deeper review
 
+DE tally plot rule:
+
+- Generate a compact cluster-by-cluster DE tally plot whenever the contrast overview would benefit from a quick scan of where significant signal concentrates across the atlas.
+- Build the tally directly from the DE summary tables by counting genes that pass the project's stated significance cutoff, usually `FDR < 0.05`, and keep `cell_based` and `pseudobulk_DE` tallies separate when both are available.
+- For phase 4, create both an all-cluster view and a nonzero-only companion view so the report shows atlas-wide coverage and the subset of clusters that actually carry signal.
+- For phase 5, use the same tally logic as the cluster context layer around the focal contrast and cluster, with the target cluster highlighted distinctly.
+- If both pseudobulk and cell-level DE are available, treat the pseudobulk tally as the primary prioritization view and the cell-level tally as supportive context.
+- Use a short title and axis label that state the contrast and evidence source, for example `Pseudobulk DE genes (FDR < 0.05)`.
+- Keep tally plots compact horizontal bar charts sorted by gene count; include the corresponding CSV table alongside the figure.
+- Do not use tally plots as substitutes for gene-level, pathway, or regulator evidence. They are triage and coverage views, not the final biological argument.
+
 DE evidence-source rules:
 
 - Always check whether both `cell_based/` and `pseudobulk_DE/` result trees are present for the requested run.
@@ -631,6 +684,7 @@ Enrichment-evidence rules for phase 4:
 
 Additional phase 4 plotting and query rule:
 
+- Use DE tally plots early in the workflow when the question is where the signal concentrates across clusters. They should usually be one of the first atlas-level figures in phase 4, before adding more specialized pathway panels.
 - Reuse existing pipeline figures first.
 - If the figure tree is insufficient to answer the interpretive question, generate targeted additional plots through the `scomnom` plotting API.
 - Suitable extra plots include contrast-split expression UMAPs, contrast-split violins, and targeted dotplots for selected genes.
@@ -752,6 +806,15 @@ Phase 5 reports should answer:
 - for sex-related contrasts, what coherent autosomal program remains beyond the obvious sex-chromosome hits
 - whether pathway and regulator shifts support the gene-level story
 - whether the result looks biologically interpretable, weak, or potentially technical
+
+DE tally plot rule:
+
+- Use a cluster-by-cluster DE tally plot as the phase 5 context view whenever it helps place the focal cluster in the atlas-level contrast landscape.
+- For phase 5, the tally should be built from the same DE summary tables as the report itself and should reflect the report's primary evidence source, usually pseudobulk when available.
+- If both cell-level and pseudobulk tallies exist, show the pseudobulk tally first and keep the cell-level tally as a supporting companion only when it adds value.
+- For sex-related contrasts, an autosomal-focused follow-up tally can be useful only if it helps explain which clusters carry the residual non-sex-chromosome program.
+- Keep the figure simple: horizontal bars, cluster labels, counts on the bars, and a nonzero-only companion if the full atlas view is crowded.
+- Do not use tally plots to replace the directional gene list or pathway readout for the selected cluster.
 
 Recommended evidence hierarchy for phase 5:
 
@@ -940,6 +1003,7 @@ Recommended data inputs for phase 6:
 
 - the relevant phase 4 DE overview reports for the requested contrast across available layers
 - the relevant phase 5 DE reports for priority clusters across available layers
+- the corresponding phase 4 and phase 5 DE tally plots, with the pseudobulk tally as the preferred atlas-level coverage view when available
 - the matching DE settings files and `__summary.csv` tables
 - selected underlying `combined.csv` cluster tables for spot checks
 - phase 3 overview outputs and any active label-hierarchy layers
@@ -1141,6 +1205,7 @@ Recommended data inputs for phase 7:
 - the relevant phase 4 DE overview reports across layers and contrasts
 - the relevant phase 5 DE reports for the key driver populations
 - the relevant phase 6 synthesis reports across contrasts
+- the phase 4 and phase 5 DE tally plots that summarize where the strongest cluster-level signal concentrates
 - matching DE and DA settings files and summary tables
 - relevant enrichment reports and figure trees across layers and contrasts
 - selected underlying DE and DA tables for spot checks
@@ -1319,6 +1384,7 @@ Recommended data inputs for phase 8:
 - the relevant phase 6 contrast synthesis report or reports
 - the relevant phase 5 DE reports for the main driver populations
 - the relevant phase 4 atlas-level DE overview report
+- the phase 4 and phase 5 DE tally plots when they help ground which compartments carry the broad signal
 - targeted gene-level DE tables for the main driver populations
 - targeted enrichment outputs for the main driver populations and broader layers
 - differential-abundance outputs when they help distinguish state change from expansion or contraction
@@ -1543,6 +1609,7 @@ Recommended data inputs for phase 9:
 - all relevant phase 8 mechanistic synthesis reports
 - the relevant phase 7 project-level synthesis report
 - the relevant phase 6 contrast synthesis reports
+- the phase 4 and phase 5 DE tally plots when they help adjudicate which compartments carry the integrated signal
 - targeted CCC tables or figures needed to adjudicate specific contrast differences
 - literature notes used to contextualize phase 8 hypotheses when they help resolve cross-contrast interpretation
 - project-local mechanistic framing notes when available
