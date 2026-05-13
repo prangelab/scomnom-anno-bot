@@ -1,0 +1,18 @@
+DE tally plot template
+
+Use this module from the project-local `scomnom_env` / `scOmnom_env` Python stack.
+
+Intended pattern:
+- import `TallyConfig` and `generate_tally_plots`
+- point `adata_path` at the DE-enabled `scOmnom` archive
+- point `pseudobulk_dir` and/or `celllevel_dir` at the matching DE summary tables
+- set `cluster_label_key` to the active cluster label column in `adata.obs`
+- choose `contrast_id` and the matching contrast suffix or dirname for the DE tree
+- call `generate_tally_plots(config, outdir)`
+
+The output should be:
+- one CSV tally table
+- one all-cluster horizontal bar plot
+- one nonzero-only companion bar plot
+
+The tally counts are descriptive coverage summaries, not substitutes for gene-level DE or pathway interpretation.

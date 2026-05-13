@@ -685,6 +685,7 @@ Enrichment-evidence rules for phase 4:
 Additional phase 4 plotting and query rule:
 
 - Use DE tally plots early in the workflow when the question is where the signal concentrates across clusters. They should usually be one of the first atlas-level figures in phase 4, before adding more specialized pathway panels.
+- The reusable code template for this is `templates/report_templates/de_tally_plots_template.py`; use it from the project-local `scomnom_env` / `scOmnom_env` Python stack when generating a new tally set.
 - Reuse existing pipeline figures first.
 - If the figure tree is insufficient to answer the interpretive question, generate targeted additional plots through the `scomnom` plotting API.
 - Suitable extra plots include contrast-split expression UMAPs, contrast-split violins, and targeted dotplots for selected genes.
@@ -812,6 +813,7 @@ DE tally plot rule:
 - Use a cluster-by-cluster DE tally plot as the phase 5 context view whenever it helps place the focal cluster in the atlas-level contrast landscape.
 - For phase 5, the tally should be built from the same DE summary tables as the report itself and should reflect the report's primary evidence source, usually pseudobulk when available.
 - If both cell-level and pseudobulk tallies exist, show the pseudobulk tally first and keep the cell-level tally as a supporting companion only when it adds value.
+- The reusable code template for this is `templates/report_templates/de_tally_plots_template.py`; adapt it rather than rewriting tally logic ad hoc.
 - For sex-related contrasts, an autosomal-focused follow-up tally can be useful only if it helps explain which clusters carry the residual non-sex-chromosome program.
 - Keep the figure simple: horizontal bars, cluster labels, counts on the bars, and a nonzero-only companion if the full atlas view is crowded.
 - Do not use tally plots to replace the directional gene list or pathway readout for the selected cluster.
